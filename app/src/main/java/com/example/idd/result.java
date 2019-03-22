@@ -26,7 +26,7 @@ public class result extends AppCompatActivity {
     private Button homeButton;
     private String print;
 
-    private double[] features= new double[10];
+    private double[] features= new double[14];
 
     private Classifier mClassifier=null;
 
@@ -59,29 +59,15 @@ public class result extends AppCompatActivity {
         String answer[]=bundle.getStringArray("key");
 
 
-        for(int i=0;i<10;i++){
+        for(int i=0;i<14;i++){
             if(answer[i].equals("yes"))
                 features[i]=0;
             else
                 features[i]=1;
         }
 
-        if(answer[2].equals("2 or 3"))
-            features[2]=0;
-        else
-            features[2]=1;
-        if(answer[5].equals("0 to 2"))
-            features[5]=0;
-        else
-            features[5]=1;
 
-        if(answer[8].equals("found"))
-            features[8]=0;
-        else
-            features[8]=1;
-
-        answersTextView.setText(toString(features));
-        //Toast.makeText(this, toString(features), Toast.LENGTH_SHORT).show();
+        //answersTextView.setText(toString(features));
 
         predictLD();
 
@@ -91,7 +77,7 @@ public class result extends AppCompatActivity {
 
     private String toString(double[] features) {
         String string="";
-        for(int i=0;i<10;i++)
+        for(int i=0;i<14;i++)
             string+=features[i]+" ";
         return string;
     }
@@ -100,8 +86,8 @@ public class result extends AppCompatActivity {
     public void predictLD(){
         AssetManager assetManager = getAssets();
         try {
-            mClassifier = (Classifier) weka.core.SerializationHelper.read(assetManager.open("data.model"));
-            Toast.makeText(this, "Model loaded.", Toast.LENGTH_SHORT).show();
+            mClassifier = (Classifier) weka.core.SerializationHelper.read(assetManager.open("temp.model"));
+            //Toast.makeText(this, "Model loaded.", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
             return;
@@ -113,22 +99,25 @@ public class result extends AppCompatActivity {
         //Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
 
 
-        final Attribute attribute1 = new Attribute("identification");
-        final Attribute attribute2 = new Attribute("imitation");
-        final Attribute attribute3 = new Attribute("tasks");
-        final Attribute attribute4 = new Attribute("memory");
-        final Attribute attribute5 = new Attribute("responsive");
-        final Attribute attribute6 = new Attribute("patience");
-        final Attribute attribute7 = new Attribute("energy");
-        final Attribute attribute8 = new Attribute("social");
-        final Attribute attribute9 = new Attribute("attention");
-        final Attribute attribute10 = new Attribute("lose");
+        final Attribute attribute1 = new Attribute("social");
+        final Attribute attribute2 = new Attribute("nonverbal");
+        final Attribute attribute3 = new Attribute("social_emotional");
+        final Attribute attribute4 = new Attribute("relationships");
+        final Attribute attribute5 = new Attribute("speech_motor");
+        final Attribute attribute6 = new Attribute("routine");
+        final Attribute attribute7 = new Attribute("interests");
+        final Attribute attribute8 = new Attribute("sensory_input");
+        final Attribute attribute9 = new Attribute("reading_1");
+        final Attribute attribute10 = new Attribute("reading_2");
+        final Attribute attribute11 = new Attribute("writing");
+        final Attribute attribute12 = new Attribute("other_1");
+        final Attribute attribute13 = new Attribute("other_2");
+        final Attribute attribute14 = new Attribute("strengths");
         final List<String> classes = new ArrayList<String>() {
             {
-                add("no-LD"); // cls nr 1
-                add("mild"); // cls nr 2
-                add("has-LD"); // cls nr 3
-                add("Hyperactivity"); //cls nr 4
+                add("autism"); // cls nr 1
+                add("normal"); // cls nr 2
+                add("dyslexia"); // cls nr 3
             }
         };
 
@@ -144,6 +133,10 @@ public class result extends AppCompatActivity {
                 add(attribute8);
                 add(attribute9);
                 add(attribute10);
+                add(attribute11);
+                add(attribute12);
+                add(attribute13);
+                add(attribute14);
                 Attribute attributeClass = new Attribute("@@class@@", classes);
                 add(attributeClass);
             }
@@ -167,6 +160,10 @@ public class result extends AppCompatActivity {
                 setValue(attribute8, features[7]);
                 setValue(attribute9, features[8]);
                 setValue(attribute10, features[9]);
+                setValue(attribute11, features[10]);
+                setValue(attribute12, features[11]);
+                setValue(attribute13, features[12]);
+                setValue(attribute14, features[13]);
             }
         };
         // reference to dataset

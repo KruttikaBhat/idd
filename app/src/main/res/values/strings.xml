@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">IDD</string>
+    <string name="navigationdrawer_open">Open navigation drawer</string>
+    <string name="navigationdrawer_close">Close navigation drawer</string>
 </resources>
