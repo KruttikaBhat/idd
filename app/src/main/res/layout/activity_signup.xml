@@ -10,6 +10,44 @@
 
 
 
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:hint="Name"
+        android:layout_marginLeft="32dp"
+        android:paddingTop="24dp" />
+
+    <EditText
+        android:id="@+id/editTextAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:hint="Age"
+        android:layout_marginLeft="32dp"
+        android:paddingTop="24dp" />
+
+    <EditText
+        android:id="@+id/editTextProfession"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:hint="Profession"
+        android:layout_marginLeft="32dp"
+        android:paddingTop="24dp" />
+
+    <EditText
+        android:id="@+id/editTextSchool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:hint="School (if applicable) otherwise write NA"
+        android:layout_marginLeft="32dp"
+        android:paddingTop="24dp" />
+
+
+
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -27,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="24dp"
-        android:hint="password"
+        android:hint="Password"
         android:layout_marginLeft="32dp"
         android:paddingTop="24dp"
         android:inputType="textPassword"

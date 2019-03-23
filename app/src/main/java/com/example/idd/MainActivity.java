@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                                         Toast.makeText(MainActivity.this, "Authentication failed, check your email and password or sign up", Toast.LENGTH_LONG).show();
                                     }
                                 } else {
+                                    finish();
                                     Intent intent = new Intent(MainActivity.this, home.class);
                                     startActivity(intent);
                                 }
@@ -98,6 +99,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+
+        if(firebaseAuth.getCurrentUser()!=null){
+            finish();
+            Intent intent = new Intent(MainActivity.this, home.class);
+            startActivity(intent);
+        }
     }
 
 }

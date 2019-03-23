@@ -8,11 +8,43 @@
         android:layout_height="wrap_content"
         android:text="Home"
         android:textSize="32sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register a new child"
+        android:textSize="24sp"
+        android:layout_marginTop="16dp"/>
+    <EditText
+        android:id="@+id/editTextChildName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:hint="Name"
+        android:layout_marginLeft="32dp"
+        android:paddingTop="24dp" />
+    <EditText
+        android:id="@+id/editTextChildAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:hint="Age"
+        android:layout_marginLeft="32dp"
+        android:paddingTop="24dp" />
+    <EditText
+        android:id="@+id/editTextChildClass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:hint="Class"
+        android:layout_marginLeft="32dp"
+        android:paddingTop="24dp" />
+
     <Button
-        android:id="@+id/startquiz"
+        android:id="@+id/registerChildButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Assessment"
+        android:text="Register Child"
         android:layout_marginTop="16dp"
         />
 

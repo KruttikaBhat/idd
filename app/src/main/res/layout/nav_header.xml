@@ -14,16 +14,17 @@
         android:src="@mipmap/ic_nav_round"/>
 
     <TextView
+        android:id="@+id/userNameNavHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
+        android:id="@+id/userEmailNavHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="something"/>
+        />
 
 
 </LinearLayout>

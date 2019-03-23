@@ -17,6 +17,7 @@
             android:screenOrientation="sensorPortrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
+
         </activity>
         <activity android:name=".MainActivity"/>
         <activity android:name=".result" />
@@ -29,7 +30,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>>
+
+        </activity>
     </application>
 
 </manifest>
