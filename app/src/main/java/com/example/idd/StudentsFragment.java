@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class StudentsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private ChildAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     private static final String root="users";
@@ -61,6 +61,13 @@ public class StudentsFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemCLickListener(new ChildAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                childList.get(position);
+            }
+        });
 
         recyclerView=view.findViewById(R.id.studentRecyclerView);
         layoutManager=new LinearLayoutManager(getActivity());
