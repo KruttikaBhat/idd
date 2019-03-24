@@ -11,6 +11,18 @@
         android:layout_width="match_parent"
         android:layout_margin="4dp">
         <TextView
+            android:id="@+id/textViewChildIndex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorWhite"/>
+
+        <TextView
             android:id="@+id/textViewNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
@@ -63,6 +75,7 @@
             android:layout_marginLeft="16dp"
             android:textSize="20sp"
             android:text="someclass"/>
+
 
 
 

@@ -2,17 +2,37 @@ package com.example.idd;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import weka.classifiers.Classifier;
@@ -25,6 +45,18 @@ public class result extends AppCompatActivity {
     private TextView answersTextView,resultTextView;
     private Button homeButton;
     private String print;
+
+    private static final String root="users";
+    private static final String key_result="result";
+    private static final String key_date="date";
+    private static final String childcollection="children";
+    private static final String key_assess="assessments";
+    private static final String key_numassess="numberOfAssessments";
+
+
+    private FirebaseFirestore db=FirebaseFirestore.getInstance();
+    private FirebaseAuth firebaseAuth;
+
 
     private double[] features= new double[14];
 
@@ -43,6 +75,10 @@ public class result extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        firebaseAuth= FirebaseAuth.getInstance();
+        final FirebaseUser user=firebaseAuth.getCurrentUser();
+
+
         answersTextView=(TextView)findViewById(R.id.answers);
         resultTextView=(TextView)findViewById(R.id.resultTextView);
         homeButton=(Button)findViewById(R.id.homeButton);
@@ -57,6 +93,7 @@ public class result extends AppCompatActivity {
 
         Bundle bundle=getIntent().getExtras();
         String answer[]=bundle.getStringArray("key");
+        final String index=bundle.getString("index");
 
 
         for(int i=0;i<14;i++){
@@ -66,11 +103,76 @@ public class result extends AppCompatActivity {
                 features[i]=1;
         }
 
+        predictLD();
+
 
         //answersTextView.setText(toString(features));
 
-        predictLD();
+        /*if(user!=null){
+            final String email=user.getEmail();
+            final String result=predictLD();
+            if(email!=null) {
+                //Toast.makeText(home.this, email, Toast.LENGTH_SHORT).show();
+                db.collection(root).document(email).collection(childcollection).document(index).get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
+                                String number=documentSnapshot.getString(key_numassess);
+                                Integer newnumInt = (Integer.valueOf(number))+1;
+                                String newnumString=String.valueOf(newnumInt);
+                                Date c = Calendar.getInstance().getTime();
+                                System.out.println("Current time => " + c);
+
+                                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+                                String formattedDate = df.format(c);
+                                final Map<String, Object> child=new HashMap<>();
+                                child.put(key_result,result);
+                                child.put(key_date,formattedDate);
+
+
+                                db.collection(root).document(email).collection(childcollection).document(index).update(key_numassess,newnumString);
+                                db.collection(root).document(email).collection(childcollection).document(index).collection(key_assess).document(newnumString).set(child)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                //Toast.makeText(Signup.this,"New user created",Toast.LENGTH_LONG).show();
+                                                Toast.makeText(result.this,"Apdated result in database",Toast.LENGTH_LONG).show();
+                                                //Intent intent=new Intent(getActivity(),Quiz.class);
+                                                //startActivity(intent);
+
+
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(result.this,"Error in registration",Toast.LENGTH_LONG).show();
+                                                Log.d("result",e.toString());
+
+                                            }
+                                        });
+
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(result.this, "Child document not found", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+
+            }
+            else{
+                Toast.makeText(result.this, "Email can't be found", Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        }*/
 
 
     }
@@ -84,17 +186,19 @@ public class result extends AppCompatActivity {
 
 
     public void predictLD(){
+
+        String className = null;
         AssetManager assetManager = getAssets();
         try {
-            mClassifier = (Classifier) weka.core.SerializationHelper.read(assetManager.open("temp.model"));
+            mClassifier = (Classifier) weka.core.SerializationHelper.read(assetManager.open("dataset.model"));
             //Toast.makeText(this, "Model loaded.", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
-            return;
+            return ;
         } catch (Exception e) {
             // Weka "catch'em all!"
             e.printStackTrace();
-            return;
+            return ;
         }
         //Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
 
@@ -116,7 +220,7 @@ public class result extends AppCompatActivity {
         final List<String> classes = new ArrayList<String>() {
             {
                 add("autism"); // cls nr 1
-                add("normal"); // cls nr 2
+                add("autistic-features"); // cls nr 2
                 add("dyslexia"); // cls nr 3
             }
         };
@@ -171,19 +275,20 @@ public class result extends AppCompatActivity {
 
         try {
             double result = mClassifier.classifyInstance(newInstance);
-            String className = classes.get(new Double(result).intValue());
+            className = classes.get(new Double(result).intValue());
             //String msg = "Nr: " + s.nr + ", predicted: " + className + ", actual: " + classes.get(s.label);
             //Log.d(WEKA_TEST, msg);
-            //Toast.makeText(this, className, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, className, Toast.LENGTH_SHORT).show();
             resultTextView.setText(className);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+
+
+
     }
-
-
-
 
 
 }

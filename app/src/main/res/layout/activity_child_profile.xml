@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".childProfile">
+
+    <TextView
+        android:id="@+id/childProfileHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Child Profile"
+        android:textSize="32dp"
+        />
+    <Button
+        android:id="@+id/assessmentButton"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/childProfileHeading"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:layout_marginLeft="32dp"
+        android:textSize="20dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center_horizontal"
+        android:text="Perform Assessment"/>
+    <TextView
+        android:id="@+id/childNameHeading"
+        android:layout_below="@+id/assessmentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name: "
+        android:layout_marginTop="16dp"
+        android:textSize="28dp"
+        />
+    <TextView
+        android:id="@+id/childNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/childNameHeading"
+        android:layout_below="@id/assessmentButton"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="28dp"
+        />
+    <TextView
+        android:id="@+id/childAgeHeading"
+        android:layout_below="@+id/childNameHeading"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Age: "
+        android:textSize="28dp"
+        />
+    <TextView
+        android:id="@+id/childAgeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/childAgeHeading"
+        android:layout_below="@id/childNameHeading"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="28dp"
+        />
+
+    <TextView
+        android:id="@+id/childClassHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/childAgeHeading"
+        android:layout_marginTop="16dp"
+        android:text="Class: "
+        android:textSize="28dp"
+        />
+    <TextView
+        android:id="@+id/childClassTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/childClassHeading"
+        android:layout_below="@id/childAgeHeading"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="28dp"
+        />
+
+    <TextView
+        android:id="@+id/childAssessments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Assessments Done"
+        android:layout_below="@id/childClassHeading"
+        android:layout_marginTop="16dp"
+        android:textSize="32dp"
+        />
+    <ListView
+        android:id="@+id/assessmentsListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

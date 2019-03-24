@@ -62,10 +62,11 @@ public class StudentsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemCLickListener(new ChildAdapter.OnItemClickListener() {
+        adapter.setOnChildCLickListener(new ChildAdapter.OnChildClickListener() {
             @Override
-            public void onItemClick(int position) {
-                childList.get(position);
+            public void onChildClick(int position) {
+                childList.get(position).getChildName();
+
             }
         });
 
@@ -101,11 +102,12 @@ public class StudentsFragment extends Fragment {
                                                     String age=documentSnapshot.getString("Age");
                                                     //cAge[i -1]=age;
                                                     String cclass=documentSnapshot.getString("Class");
+                                                    String cindex=documentSnapshot.getString("Index");
                                                     //cClass[i -1]=cclass;
                                                     //Toast.makeText(getActivity(), cName[i-1]+" age:"+cAge[i-1]+" class:"+cClass[i-1], Toast.LENGTH_SHORT).show();
                                                     if(name!=null && age!=null && cclass!=null){
                                                         //Toast.makeText(getActivity(), name+" age1: "+age+" class1: "+cclass, Toast.LENGTH_SHORT).show();
-                                                        childList.add(new ChildItem(name,age,cclass));
+                                                        childList.add(new ChildItem(name,age,cclass,cindex));
                                                         //Toast.makeText(getActivity(), String.valueOf(childList.size()), Toast.LENGTH_SHORT).show();
 
                                                     }
@@ -115,7 +117,7 @@ public class StudentsFragment extends Fragment {
                                                         adapter=new ChildAdapter(childList);
                                                         recyclerView.setLayoutManager(layoutManager);
                                                         recyclerView.setAdapter(adapter);
-                                                        Toast.makeText(getActivity(), "done1", Toast.LENGTH_SHORT).show();
+                                                        //Toast.makeText(getActivity(), "done1", Toast.LENGTH_SHORT).show();
 
                                                     }
 

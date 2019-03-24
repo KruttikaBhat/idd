@@ -12,24 +12,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".childProfile"></activity>
         <activity
             android:name=".splashScreen"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-
-        </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".result" />
-        <activity android:name=".Quiz" />
-        <activity android:name=".Signup" />
-        <activity android:name=".home"
-            android:theme="@style/AppTheme.noActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".result" />
+        <activity android:name=".Quiz" />
+        <activity android:name=".Signup" />
+        <activity
+            android:name=".home"
+            android:theme="@style/AppTheme.noActionBar">
 
         </activity>
     </application>

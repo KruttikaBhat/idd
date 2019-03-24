@@ -6,9 +6,12 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText emailEditText,passwordEditText;
     private ProgressDialog progressDialog;
 
+    private CheckBox showPassword;
+
 
 
 
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth=FirebaseAuth.getInstance();
 
-        signupButton = (Button) findViewById(R.id.signup);
+        //signupButton = (Button) findViewById(R.id.signup);
         loginButton = (Button) findViewById(R.id.login);
         emailEditText=(EditText)findViewById(R.id.editTextEmail);
         passwordEditText=(EditText)findViewById(R.id.editTextPassword);
@@ -44,11 +49,23 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        /*signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent Intent = new Intent(view.getContext(), Signup.class);
                 view.getContext().startActivity(Intent);}
+        });
+*/
+        showPassword = (CheckBox) findViewById(R.id.showPasswordCheckbox);
+        showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            // @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
         });
 
 
@@ -100,6 +117,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public void signUpClicked(View view){
+        Intent Intent = new Intent(MainActivity.this, Signup.class);
+        startActivity(Intent);
+    }
+/*
+    showPassword = (CheckBox) findViewById(R.id.showPassword);
+		showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+       // @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if(isChecked) {
+                mPasswordView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                mPasswordView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+        }
+    });*/
 
     @Override
     protected void onStart() {

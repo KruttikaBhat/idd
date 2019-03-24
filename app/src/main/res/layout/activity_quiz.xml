@@ -8,18 +8,160 @@
     android:padding="16dp"
     tools:context=".Quiz">
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="1"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="2"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="3"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="4"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="5"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="6"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="7"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="8"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="9"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="10"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="11"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="12"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="13"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/round_shape"
+                    android:text="14"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+
+            </LinearLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+
+
+
+
+
     <TextView
         android:id="@+id/quesnumTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:textSize="35sp"
+        android:fontFamily="@font/comicsans"
+        android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="70dp"/>
 
     <TextView
         android:id="@+id/question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/comicsans"
         android:layout_marginTop="16dp"
         android:textSize="24sp"/>
 
@@ -27,6 +169,7 @@
         android:id="@+id/option1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/comicsans"
         android:layout_marginTop="16dp"
         android:textSize="20sp"/>
 
@@ -34,16 +177,25 @@
         android:id="@+id/option2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/comicsans"
         android:layout_marginTop="16dp"
         android:textSize="20sp"/>
 
-    <Button
+    <!--<Button
+         android:id="@+id/nextButton"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="32dp"
+         android:text="Next"
+         android:textSize="24sp"
+         android:layout_gravity="center_horizontal"/>-->
+    <ImageButton
         android:id="@+id/nextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="82dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center|right"
+        android:background="#008577"
         android:layout_marginTop="32dp"
-        android:text="Next"
-        android:textSize="24sp"
-        android:layout_gravity="center_horizontal"/>
+        android:src="@drawable/next" />
 
 </LinearLayout>

@@ -43,6 +43,7 @@ public class HomeFragment extends Fragment {
     private static final String key_class="Class";
     private static final String key_numOfAssess="numberOfAssessments";
     private static final String key_numofStudents="numberOfStudents";
+    private static final String key_index="Index";
 
 
     private FirebaseAuth firebaseAuth;
@@ -90,6 +91,7 @@ public class HomeFragment extends Fragment {
                                         String number=documentSnapshot.getString(key_numofStudents);
                                         Integer newnumInt = (Integer.valueOf(number))+1;
                                         String newnumString=String.valueOf(newnumInt);
+                                        child.put(key_index,newnumString);
 
                                         db.collection(root).document(email).update(key_numofStudents,newnumString);
                                         db.collection(root).document(email).collection(childcollection).document(newnumString).set(child)

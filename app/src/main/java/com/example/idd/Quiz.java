@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ public class Quiz extends AppCompatActivity {
 
     private TextView questionTextView,quesnumTextView;
     private RadioButton option1RadioButton, option2RadioButton;
-    private Button nextButton;
+    private ImageButton nextButton;
 
     public int quesNum,categoryNum=1,numOfQues,count1=0,count2=0,total=0,storequesNum;
     public String categoryName;
@@ -46,7 +47,12 @@ public class Quiz extends AppCompatActivity {
         questionTextView=(TextView)findViewById(R.id.question);
         option1RadioButton=(RadioButton)findViewById(R.id.option1);
         option2RadioButton=(RadioButton)findViewById(R.id.option2);
-        nextButton=(Button)findViewById(R.id.nextButton);
+        nextButton=(ImageButton) findViewById(R.id.nextButton);
+
+        Bundle bundle=getIntent().getExtras();
+        final String index=bundle.getString("index");
+        Toast.makeText(this, index, Toast.LENGTH_SHORT).show();
+
 
         updateQuestion();
 
@@ -80,6 +86,7 @@ public class Quiz extends AppCompatActivity {
                     Intent intent=new Intent(Quiz.this,result.class);
                     Bundle bundle =new Bundle();
                     bundle.putStringArray("key",answer);
+                    bundle.putString("index",index);
                     intent.putExtras(bundle);
                     Quiz.this.finish();
                     startActivity(intent);
