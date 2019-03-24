@@ -52,15 +52,18 @@ public class StudentsFragment extends Fragment {
 
 
 
-        /*childList.add(new ChildItem("name1","age1","class1"));
-        childList.add(new ChildItem("name2","age2","class2"));
-        childList.add(new ChildItem("name3","age3","class3"));
+        //childList.add(new ChildItem("name1","age1","class1"));
+        //childList.add(new ChildItem("name2","age2","class2"));
+        //childList.add(new ChildItem("name3","age3","class3"));
         recyclerView=view.findViewById(R.id.studentRecyclerView);
         layoutManager=new LinearLayoutManager(getActivity());
         adapter=new ChildAdapter(childList);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        recyclerView=view.findViewById(R.id.studentRecyclerView);
+        layoutManager=new LinearLayoutManager(getActivity());
 
         if(user!=null){
             final String email=user.getEmail();
@@ -71,7 +74,7 @@ public class StudentsFragment extends Fragment {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 String number=documentSnapshot.getString(key_numofStudents);
-                                Integer num = (Integer.valueOf(number));
+                                final Integer num = (Integer.valueOf(number));
 
 
 
@@ -94,9 +97,21 @@ public class StudentsFragment extends Fragment {
                                                     //cClass[i -1]=cclass;
                                                     //Toast.makeText(getActivity(), cName[i-1]+" age:"+cAge[i-1]+" class:"+cClass[i-1], Toast.LENGTH_SHORT).show();
                                                     if(name!=null && age!=null && cclass!=null){
-                                                        Toast.makeText(getActivity(), name+" age1: "+age+" class1: "+cclass, Toast.LENGTH_SHORT).show();
+                                                        //Toast.makeText(getActivity(), name+" age1: "+age+" class1: "+cclass, Toast.LENGTH_SHORT).show();
                                                         childList.add(new ChildItem(name,age,cclass));
+                                                        //Toast.makeText(getActivity(), String.valueOf(childList.size()), Toast.LENGTH_SHORT).show();
+
                                                     }
+                                                    if(childList.size()==num){
+                                                        //Toast.makeText(getActivity(), "done", Toast.LENGTH_SHORT).show();
+
+                                                        adapter=new ChildAdapter(childList);
+                                                        recyclerView.setLayoutManager(layoutManager);
+                                                        recyclerView.setAdapter(adapter);
+                                                        Toast.makeText(getActivity(), "done1", Toast.LENGTH_SHORT).show();
+
+                                                    }
+
 
 
                                                 }
@@ -108,13 +123,14 @@ public class StudentsFragment extends Fragment {
                                                 }
                                             });
                                 }
-                                childList.add(new ChildItem("name1","age1","class1"));
+                                //childList.add(new ChildItem("name1","age1","class1"));
 
-                                childList.add(new ChildItem("name2","age2","class2"));
-                                childList.add(new ChildItem("name3","age3","class3"));
-                                Toast.makeText(getActivity(), String.valueOf(childList.size()), Toast.LENGTH_SHORT).show();
+                                //childList.add(new ChildItem("name2","age2","class2"));
+                                //childList.add(new ChildItem("name3","age3","class3"));
+                                //Toast.makeText(getActivity(), String.valueOf(childList.size()), Toast.LENGTH_SHORT).show();
 
-                                while(i==num+1){
+
+                               /* while(i==num+1){
                                     for(i1 =0; i1<num; i1++){
                                         childList.add(new ChildItem( cName[i1],cAge[i1],cClass[i1]));
                                         Toast.makeText(getActivity(), cName[i1]+" age2:"+cAge[i1]+" class2:"+cClass[i1], Toast.LENGTH_SHORT).show();
@@ -138,13 +154,18 @@ public class StudentsFragment extends Fragment {
                                     }
                                     break;
 
-                                }
+                                }*/
 
 
 
                             }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity(), "Couldn't get user email", Toast.LENGTH_SHORT).show();
+                            }
                         });
-
 
 
 
@@ -156,12 +177,7 @@ public class StudentsFragment extends Fragment {
 
 
         }
-        recyclerView=view.findViewById(R.id.studentRecyclerView);
-        layoutManager=new LinearLayoutManager(getActivity());
-        adapter=new ChildAdapter(childList);
 
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);*/
 
 
 

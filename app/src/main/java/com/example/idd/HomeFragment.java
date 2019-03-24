@@ -98,13 +98,13 @@ public class HomeFragment extends Fragment {
                                                     public void onSuccess(Void aVoid) {
                                                         //Toast.makeText(Signup.this,"New user created",Toast.LENGTH_LONG).show();
                                                         Toast.makeText(getActivity(),"Successfully registered child",Toast.LENGTH_LONG).show();
-                                                        Intent intent=new Intent(getActivity(),Quiz.class);
-                                                        startActivity(intent);
+                                                        //Intent intent=new Intent(getActivity(),Quiz.class);
+                                                        //startActivity(intent);
 
-                                                        /*FragmentTransaction transaction=getFragmentManager().beginTransaction();
+                                                        FragmentTransaction transaction=getFragmentManager().beginTransaction();
                                                         transaction.replace(R.id.fragment_container,new StudentsFragment());
                                                         transaction.addToBackStack(null);
-                                                        transaction.commit();*/
+                                                        transaction.commit();
 
 
                                                     }
