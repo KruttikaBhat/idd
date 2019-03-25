@@ -81,27 +81,7 @@ public class Quiz extends AppCompatActivity {
 
         updateQuestion();
 
-        /*option1RadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                answer[total-1] = (String) option1RadioButton.getText();
-                //Toast.makeText(getApplicationContext(),"Answered q"+String.valueOf(categoryNum-1) +
-                //        ": "+answer[total-1]+",subques"+String.valueOf(quesNum)+",count"+String.valueOf(count)
-                //        +"Categoryname:"+categoryName+",total:"+String.valueOf(total),Toast.LENGTH_LONG).show();
 
-            }
-        });
-
-        option2RadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                answer[total-1] = (String) option2RadioButton.getText();
-                //Toast.makeText(getApplicationContext(),"Answered q"+String.valueOf(categoryNum-1) +
-                //        ": "+answer[total-1]+",subques"+String.valueOf(quesNum)+",count"+String.valueOf(count)
-                //        +"Categoryname:"+categoryName+",total:"+String.valueOf(total),Toast.LENGTH_LONG).show();
-
-            }
-        });*/
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,33 +170,11 @@ public class Quiz extends AppCompatActivity {
 
             }
         };
-        /*
-        qButton[0].setOnClickListener(btnListener);
-        qButton[1].setOnClickListener(btnListener);
-        qButton[2].setOnClickListener(btnListener);
-        qButton[3].setOnClickListener(btnListener);
-        qButton[4].setOnClickListener(btnListener);
-        qButton[5].setOnClickListener(btnListener);
-        qButton[6].setOnClickListener(btnListener);
-        qButton[7].setOnClickListener(btnListener);
-        qButton[8].setOnClickListener(btnListener);
-        qButton[9].setOnClickListener(btnListener);
-        qButton[10].setOnClickListener(btnListener);
-        qButton[11].setOnClickListener(btnListener);
-        qButton[12].setOnClickListener(btnListener);
-        qButton[13].setOnClickListener(btnListener);
-        qButton[14].setOnClickListener(btnListener);
-        */
+
 
 
         for(Button btn:qButton)
             btn.setOnClickListener(btnListener);
-
-
-
-
-
-
 
     }
 
