@@ -1,27 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/little_girl_orange"
+    android:backgroundTint="#70FFFFFF"
+    android:backgroundTintMode="src_over">
 
-    <TextView
+
+    <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Home"
-        android:textSize="32sp"/>
+        android:fontFamily="@font/comicsans"
+        android:textSize="32sp"/>-->
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/home"/>
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register a new child"
-        android:textSize="24sp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:textSize="35sp"
+        android:fontFamily="@font/comicsans"
+        android:layout_marginTop="40dp"/>
     <EditText
         android:id="@+id/editTextChildName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="24dp"
         android:hint="Name"
+        android:fontFamily="@font/comicsans"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="40dp"
         android:paddingTop="24dp" />
     <EditText
         android:id="@+id/editTextChildAge"
@@ -29,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="24dp"
         android:hint="Age"
+        android:fontFamily="@font/comicsans"
         android:layout_marginLeft="32dp"
         android:paddingTop="24dp" />
     <EditText
@@ -37,15 +53,20 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="24dp"
         android:hint="Class"
+        android:fontFamily="@font/comicsans"
         android:layout_marginLeft="32dp"
         android:paddingTop="24dp" />
 
     <Button
         android:id="@+id/registerChildButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="110dp"
+        android:background="@drawable/round_shape"
+        android:layout_marginTop="50dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/comicsans"
         android:text="Register Child"
-        android:layout_marginTop="16dp"
-        />
+        android:textColor="#ffffff" />
 
 </LinearLayout>

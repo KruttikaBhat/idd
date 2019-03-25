@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        >
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -173,7 +173,10 @@
             android:fontFamily="@font/comicsans"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="70dp"/>
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="70dp"
+            />
 
         <TextView
             android:id="@+id/question"
@@ -181,6 +184,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/comicsans"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textSize="24sp"/>
 
         <RadioButton
@@ -190,6 +195,8 @@
             android:fontFamily="@font/comicsans"
             android:onClick="option1Clicked"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textSize="20sp"/>
 
         <RadioButton
@@ -199,6 +206,8 @@
             android:fontFamily="@font/comicsans"
             android:onClick="option2Clicked"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textSize="20sp"/>
 
         <!--<Button
@@ -216,6 +225,8 @@
             android:layout_gravity="center|right"
             android:background="#008577"
             android:layout_marginTop="32dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:src="@drawable/next" />
 
 

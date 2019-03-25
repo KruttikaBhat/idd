@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Result"
+        android:fontFamily="@font/comicsans"
         android:textSize="32sp"/>
 
     <TextView
@@ -22,6 +23,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:textSize="16sp"
+        android:fontFamily="@font/comicsans"
         android:layout_gravity="center_horizontal"/>
 
     <TextView
@@ -31,11 +33,40 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:textSize="32sp"
+        android:fontFamily="@font/comicsans"
         android:layout_gravity="center_horizontal" />
+
+
+
     <Button
         android:id="@+id/homeButton"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#008577"
+        android:fontFamily="@font/comicsans"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="105dp"
+        android:text="Home"/>
+
+    <Button
+        android:id="@+id/contactSpecialist"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Home"/>
+        android:fontFamily="@font/comicsans"
+        android:layout_marginLeft="105dp"
+        android:background="#008577"
+        android:textColor="#ffffff"
+        android:text="ContactSpecialist"/>
+    <Button
+        android:id="@+id/MoreOnLD"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/comicsans"
+        android:background="#008577"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="105dp"
+        android:text="More on LD"/>
 </LinearLayout>

@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,76 +70,81 @@ public class HomeFragment extends Fragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String cName  = childName.getText().toString().trim();
-                String cAge = childAge.getText().toString().trim();
-                String cClass = childClass.getText().toString().trim();
-                String numOfAssess="0";
+                if(isEmpty(childName) && isEmpty(childAge) && isEmpty(childClass)){
+                    Toast.makeText(getActivity(), "Enter all fields", Toast.LENGTH_SHORT).show();
 
-                final Map<String, Object> child=new HashMap<>();
-                child.put(key_name,cName);
-                child.put(key_age,cAge);
-                child.put(key_class,cClass);
-                child.put(key_numOfAssess,numOfAssess);
+                }else{
+                    String cName  = childName.getText().toString().trim();
+                    String cAge = childAge.getText().toString().trim();
+                    String cClass = childClass.getText().toString().trim();
+                    String numOfAssess="0";
 
-                FirebaseUser user=firebaseAuth.getCurrentUser();
-                if(user!=null){
-                    final String email=user.getEmail();
-                    if(email!=null) {
-                        //Toast.makeText(home.this, email, Toast.LENGTH_SHORT).show();
-                        db.collection(root).document(email).get()
-                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        String number=documentSnapshot.getString(key_numofStudents);
-                                        Integer newnumInt = (Integer.valueOf(number))+1;
-                                        String newnumString=String.valueOf(newnumInt);
-                                        child.put(key_index,newnumString);
+                    final Map<String, Object> child=new HashMap<>();
+                    child.put(key_name,cName);
+                    child.put(key_age,cAge);
+                    child.put(key_class,cClass);
+                    child.put(key_numOfAssess,numOfAssess);
 
-                                        db.collection(root).document(email).update(key_numofStudents,newnumString);
-                                        db.collection(root).document(email).collection(childcollection).document(newnumString).set(child)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        //Toast.makeText(Signup.this,"New user created",Toast.LENGTH_LONG).show();
-                                                        Toast.makeText(getActivity(),"Successfully registered child",Toast.LENGTH_LONG).show();
-                                                        //Intent intent=new Intent(getActivity(),Quiz.class);
-                                                        //startActivity(intent);
+                    FirebaseUser user=firebaseAuth.getCurrentUser();
+                    if(user!=null){
+                        final String email=user.getEmail();
+                        if(email!=null) {
+                            //Toast.makeText(home.this, email, Toast.LENGTH_SHORT).show();
+                            db.collection(root).document(email).get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            String number=documentSnapshot.getString(key_numofStudents);
+                                            Integer newnumInt = (Integer.valueOf(number))+1;
+                                            String newnumString=String.valueOf(newnumInt);
+                                            child.put(key_index,newnumString);
 
-                                                        FragmentTransaction transaction=getFragmentManager().beginTransaction();
-                                                        transaction.replace(R.id.fragment_container,new StudentsFragment());
-                                                        transaction.addToBackStack(null);
-                                                        transaction.commit();
+                                            db.collection(root).document(email).update(key_numofStudents,newnumString);
+                                            db.collection(root).document(email).collection(childcollection).document(newnumString).set(child)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            //Toast.makeText(Signup.this,"New user created",Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(getActivity(),"Successfully registered child",Toast.LENGTH_LONG).show();
+                                                            //Intent intent=new Intent(getActivity(),Quiz.class);
+                                                            //startActivity(intent);
 
-
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Toast.makeText(getActivity(),"Error in registration",Toast.LENGTH_LONG).show();
-                                                        Log.d("HomeFragment",e.toString());
-
-                                                    }
-                                                });
+                                                            FragmentTransaction transaction=getFragmentManager().beginTransaction();
+                                                            transaction.replace(R.id.fragment_container,new StudentsFragment());
+                                                            transaction.addToBackStack(null);
+                                                            transaction.commit();
 
 
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(getActivity(),"Error in registration",Toast.LENGTH_LONG).show();
+                                                            Log.d("HomeFragment",e.toString());
+
+                                                        }
+                                                    });
 
 
 
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getActivity(), "couldn't get user email", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+
+
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getActivity(), "couldn't get user email", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                        }
+
 
                     }
 
-
                 }
-
                 
             }
         });
@@ -147,5 +154,9 @@ public class HomeFragment extends Fragment {
 
 
         return view;
+    }
+
+    private boolean isEmpty(EditText etText) {
+        return etText.getText().toString().trim().length() == 0; //false->EditText is not empty, true->EditText is empty
     }
 }

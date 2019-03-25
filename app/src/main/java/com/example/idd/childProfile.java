@@ -28,7 +28,7 @@ import java.util.List;
 public class childProfile extends AppCompatActivity {
 
     private TextView name,age,cclass,assessmentsDone;
-    private ListView mAssessmentsListView;
+
 
     private FirebaseFirestore db=FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
@@ -43,8 +43,6 @@ public class childProfile extends AppCompatActivity {
     private static final String key_age="Age";
     private static final String key_class="Class";
 
-    //private assessmentsAdapter mAssessmentsAdapter;
-    //private ArrayList<assessments> mAssessmentsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +57,6 @@ public class childProfile extends AppCompatActivity {
         cclass=(TextView)findViewById(R.id.childClassTextView);
 
 
-        //mAssessmentsList = new ArrayList<assessments>();
-
-        //mAssessmentsAdapter.addAll(mAssessmentsList);
 
         Bundle bundle=getIntent().getExtras();
         final String index=bundle.getString("index");

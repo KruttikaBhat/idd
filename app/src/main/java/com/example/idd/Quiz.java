@@ -144,7 +144,7 @@ public class Quiz extends AppCompatActivity {
                             }else{
                                 option2RadioButton.setChecked(true);
                             }
-                            Toast.makeText(Quiz.this, "Pre:"+pre+" current:"+currentQuestion, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Quiz.this, "Pre:"+pre+" current:"+currentQuestion, Toast.LENGTH_SHORT).show();
 
                         }else if(questions[i]!=null && answer[i]==null){
                                 option1RadioButton.setChecked(false);
@@ -158,7 +158,7 @@ public class Quiz extends AppCompatActivity {
                                 currentQuestion=i+1;
                                 quesnumTextView.setText("Question: "+String.valueOf(currentQuestion)+"/14");
 
-                                Toast.makeText(Quiz.this, "Pre:"+pre+" current:"+currentQuestion, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(Quiz.this, "Pre:"+pre+" current:"+currentQuestion, Toast.LENGTH_SHORT).show();
 
                         }else{
                             Toast.makeText(Quiz.this, "Not yet answered", Toast.LENGTH_SHORT).show();
@@ -181,14 +181,14 @@ public class Quiz extends AppCompatActivity {
     public void option1Clicked(View view){
         option2RadioButton.setChecked(false);
         answer[currentQuestion-1]=(String)option1RadioButton.getText();
-        Toast.makeText(this, "Answer to q"+currentQuestion+": "+answer[currentQuestion-1], Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Answer to q"+currentQuestion+": "+answer[currentQuestion-1], Toast.LENGTH_SHORT).show();
 
     }
 
     public void option2Clicked(View view){
         option1RadioButton.setChecked(false);
         answer[currentQuestion-1]=(String)option2RadioButton.getText();
-        Toast.makeText(this, "Answer to q"+currentQuestion+": "+answer[currentQuestion-1], Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Answer to q"+currentQuestion+": "+answer[currentQuestion-1], Toast.LENGTH_SHORT).show();
 
     }
 
@@ -239,13 +239,13 @@ public class Quiz extends AppCompatActivity {
                                                     qButton[total].setBackgroundResource(R.drawable.round_shape_selected);
                                                     pre=total;
                                                     currentQuestion=total+1;
-                                                    if(!(categoryName.equals("reading/spelling") && count1==1)
-                                                            ||(categoryName.equals("dyslexia(other)") && count2==1)){
+                                                    if(!((categoryName.equals("reading/spelling") && count1==1)
+                                                            ||(categoryName.equals("dyslexia(other)") && count2==1))){
                                                         categoryNum++;
 
                                                     }
                                                     questions[total]=question;
-                                                    Toast.makeText(Quiz.this, "question stored:"+questions[total]+" total:"+String.valueOf(total), Toast.LENGTH_SHORT).show();
+                                                    //Toast.makeText(Quiz.this, "question stored:"+questions[total]+" total:"+String.valueOf(total), Toast.LENGTH_SHORT).show();
 
                                                     total++;
 

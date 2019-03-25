@@ -31,13 +31,16 @@
 
     <EditText
         android:id="@+id/editTextEmail"
+        android:singleLine="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="24dp"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
+        android:drawableLeft="@drawable/ic_email_black_24dp"
+        android:drawableStart="@drawable/ic_email_black_24dp"
+        android:drawablePadding="8dp"
         android:hint="Email"
         android:paddingTop="16dp" />
 
@@ -49,6 +52,9 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="24dp"
         android:textColorHint="@color/colorWhite"
+        android:drawableLeft="@drawable/ic_password_black_24dp"
+        android:drawableStart="@drawable/ic_password_black_24dp"
+        android:drawablePadding="3dp"
         android:hint="Password"
         android:inputType="textPassword"
         android:paddingTop="16dp" />
@@ -62,6 +68,7 @@
         android:checked="false"
         android:text="Show Password"
         android:textColor="@color/colorWhite"
+        android:buttonTint="@color/colorWhite"
         android:textSize="14dp" />
 
     <Button
