@@ -31,8 +31,19 @@ public class Quiz extends AppCompatActivity {
     private RadioButton option1RadioButton, option2RadioButton;
     private ImageButton nextButton;
 
-    public int quesNum,categoryNum=1,numOfQues,count1=0,count2=0,total=0,storequesNum;
+    private Button qButton[]=new Button[14];
+
+    private long idList[] = {R.id.question1Button, R.id.question2Button, R.id.question3Button,R.id.question4Button,
+    R.id.question5Button,R.id.question6Button,R.id.question7Button,R.id.question8Button,R.id.question9Button,R.id.question10Button,
+    R.id.question11Button,R.id.question12Button,R.id.question13Button,R.id.question14Button};
+
+
+    public int quesNum,categoryNum=1,numOfQues,count1=0,count2=0,total=0,
+            storequesNum,currentQuestion=0,pre=0,i;
     public String categoryName;
+
+    private String[] questions=new String[14];
+    private String[] answer = new String[14];
 
     private FirebaseFirestore db=FirebaseFirestore.getInstance();
 
@@ -42,12 +53,26 @@ public class Quiz extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        final String[] answer = new String[14];
+
         quesnumTextView=(TextView)findViewById(R.id.quesnumTextView);
         questionTextView=(TextView)findViewById(R.id.question);
         option1RadioButton=(RadioButton)findViewById(R.id.option1);
         option2RadioButton=(RadioButton)findViewById(R.id.option2);
         nextButton=(ImageButton) findViewById(R.id.nextButton);
+        qButton[0]=(Button)findViewById(R.id.question1Button);
+        qButton[1]=(Button)findViewById(R.id.question2Button);
+        qButton[2]=(Button)findViewById(R.id.question3Button);
+        qButton[3]=(Button)findViewById(R.id.question4Button);
+        qButton[4]=(Button)findViewById(R.id.question5Button);
+        qButton[5]=(Button)findViewById(R.id.question6Button);
+        qButton[6]=(Button)findViewById(R.id.question7Button);
+        qButton[7]=(Button)findViewById(R.id.question8Button);
+        qButton[8]=(Button)findViewById(R.id.question9Button);
+        qButton[9]=(Button)findViewById(R.id.question10Button);
+        qButton[10]=(Button)findViewById(R.id.question11Button);
+        qButton[11]=(Button)findViewById(R.id.question12Button);
+        qButton[12]=(Button)findViewById(R.id.question13Button);
+        qButton[13]=(Button)findViewById(R.id.question14Button);
 
         Bundle bundle=getIntent().getExtras();
         final String index=bundle.getString("index");
@@ -56,7 +81,7 @@ public class Quiz extends AppCompatActivity {
 
         updateQuestion();
 
-        option1RadioButton.setOnClickListener(new View.OnClickListener() {
+        /*option1RadioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 answer[total-1] = (String) option1RadioButton.getText();
@@ -76,7 +101,7 @@ public class Quiz extends AppCompatActivity {
                 //        +"Categoryname:"+categoryName+",total:"+String.valueOf(total),Toast.LENGTH_LONG).show();
 
             }
-        });
+        });*/
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,14 +115,127 @@ public class Quiz extends AppCompatActivity {
                     intent.putExtras(bundle);
                     Quiz.this.finish();
                     startActivity(intent);
-                }else{
+                }else if(currentQuestion==total && answer[currentQuestion-1]!=null){
                     quesNum=0;
                     updateQuestion();
+                }else if(currentQuestion==total && answer[currentQuestion-1]==null){
+                    Toast.makeText(Quiz.this, "Provide answer for this question", Toast.LENGTH_SHORT).show();
+
+                }else if(currentQuestion!=total){
+                    currentQuestion++;
+                    questionTextView.setText(questions[currentQuestion-1]);
+                    option1RadioButton.setText("yes");
+                    option2RadioButton.setText("no");
+                    qButton[currentQuestion-1].setBackgroundResource(R.drawable.round_shape_selected);
+                    if(answer[currentQuestion-1].equals("yes")){
+                        option1RadioButton.setChecked(true);
+                    }else{
+                        option2RadioButton.setChecked(true);
+                    }
+
 
                 }
             }
         });
+
+
+
+
+
+        View.OnClickListener btnListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i = 0 ; i < qButton.length ; i++){
+                    if(v.getId() == idList[i]) {
+                        if(questions[i]!=null && answer[i]!=null){
+                            option1RadioButton.setChecked(false);
+                            option2RadioButton.setChecked(false);
+
+                            questionTextView.setText(questions[i]);
+                            option1RadioButton.setText("yes");
+                            option2RadioButton.setText("no");
+                            qButton[pre].setBackgroundResource(R.drawable.round_shape);
+                            qButton[i].setBackgroundResource(R.drawable.round_shape_selected);
+                            pre=i;
+                            currentQuestion=i+1;
+                            quesnumTextView.setText("Question: "+String.valueOf(currentQuestion)+"/14");
+                            if(answer[i].equals("yes")){
+                                option1RadioButton.setChecked(true);
+                            }else{
+                                option2RadioButton.setChecked(true);
+                            }
+                            Toast.makeText(Quiz.this, "Pre:"+pre+" current:"+currentQuestion, Toast.LENGTH_SHORT).show();
+
+                        }else if(questions[i]!=null && answer[i]==null){
+                                option1RadioButton.setChecked(false);
+                                option2RadioButton.setChecked(false);
+                                questionTextView.setText(questions[i]);
+                                option1RadioButton.setText("yes");
+                                option2RadioButton.setText("no");
+                                qButton[pre].setBackgroundResource(R.drawable.round_shape);
+                                qButton[i].setBackgroundResource(R.drawable.round_shape_selected);
+                                pre=i;
+                                currentQuestion=i+1;
+                                quesnumTextView.setText("Question: "+String.valueOf(currentQuestion)+"/14");
+
+                                Toast.makeText(Quiz.this, "Pre:"+pre+" current:"+currentQuestion, Toast.LENGTH_SHORT).show();
+
+                        }else{
+                            Toast.makeText(Quiz.this, "Not yet answered", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+
+                }
+
+            }
+        };
+        /*
+        qButton[0].setOnClickListener(btnListener);
+        qButton[1].setOnClickListener(btnListener);
+        qButton[2].setOnClickListener(btnListener);
+        qButton[3].setOnClickListener(btnListener);
+        qButton[4].setOnClickListener(btnListener);
+        qButton[5].setOnClickListener(btnListener);
+        qButton[6].setOnClickListener(btnListener);
+        qButton[7].setOnClickListener(btnListener);
+        qButton[8].setOnClickListener(btnListener);
+        qButton[9].setOnClickListener(btnListener);
+        qButton[10].setOnClickListener(btnListener);
+        qButton[11].setOnClickListener(btnListener);
+        qButton[12].setOnClickListener(btnListener);
+        qButton[13].setOnClickListener(btnListener);
+        qButton[14].setOnClickListener(btnListener);
+        */
+
+
+        for(Button btn:qButton)
+            btn.setOnClickListener(btnListener);
+
+
+
+
+
+
+
     }
+
+    public void option1Clicked(View view){
+        option2RadioButton.setChecked(false);
+        answer[currentQuestion-1]=(String)option1RadioButton.getText();
+        Toast.makeText(this, "Answer to q"+currentQuestion+": "+answer[currentQuestion-1], Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void option2Clicked(View view){
+        option1RadioButton.setChecked(false);
+        answer[currentQuestion-1]=(String)option2RadioButton.getText();
+        Toast.makeText(this, "Answer to q"+currentQuestion+": "+answer[currentQuestion-1], Toast.LENGTH_SHORT).show();
+
+    }
+
+
+
 
     public void updateQuestion(){
 
@@ -124,7 +262,7 @@ public class Quiz extends AppCompatActivity {
                                 quesNum=max-storequesNum-1;
                             }
                             if(quesNum!=0){
-                                Toast.makeText(Quiz.this, "subquesNum:"+String.valueOf(quesNum), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(Quiz.this, "subquesNum:"+String.valueOf(quesNum), Toast.LENGTH_SHORT).show();
                                 db.document("questions/"+categoryNum+"/subquestions/"+quesNum).get()
                                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
@@ -133,17 +271,26 @@ public class Quiz extends AppCompatActivity {
                                                     String question=documentSnapshot.getString("question");
                                                     String option1=documentSnapshot.getString("option1");
                                                     String option2=documentSnapshot.getString("option2");
-                                                    quesnumTextView.setText("Question: "+String.valueOf(total+1)+"/14");
+                                                    quesnumTextView.setText("Question: "+String.valueOf(currentQuestion+1)+"/14");
                                                     questionTextView.setText(question);
                                                     option1RadioButton.setText(option1);
                                                     option2RadioButton.setText(option2);
                                                     option1RadioButton.setChecked(false);
                                                     option2RadioButton.setChecked(false);
-                                                    if(!((count1==1 && categoryName.equals("reading/spelling"))
-                                                            || (count2==1 && categoryName.equals("dyslexia(other)")))){
+                                                    qButton[pre].setBackgroundResource(R.drawable.round_shape);
+                                                    qButton[total].setBackgroundResource(R.drawable.round_shape_selected);
+                                                    pre=total;
+                                                    currentQuestion=total+1;
+                                                    if(!(categoryName.equals("reading/spelling") && count1==1)
+                                                            ||(categoryName.equals("dyslexia(other)") && count2==1)){
                                                         categoryNum++;
+
                                                     }
+                                                    questions[total]=question;
+                                                    Toast.makeText(Quiz.this, "question stored:"+questions[total]+" total:"+String.valueOf(total), Toast.LENGTH_SHORT).show();
+
                                                     total++;
+
 
                                                 } else{
                                                     Toast.makeText(Quiz.this, "Document does not exist", Toast.LENGTH_SHORT).show();
@@ -176,53 +323,8 @@ public class Quiz extends AppCompatActivity {
 
     }
 
-/*
-    public void updateQuestion(){
-        questionRef=new Firebase("https://iddapp-17fcc.firebaseio.com/"+ quesNum +"/question");
-        questionRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String question=dataSnapshot.getValue(String.class);
-                questionTextView.setText(question);
-            }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
 
-            }
-        });
 
-        option1Ref=new Firebase("https://iddapp-17fcc.firebaseio.com/"+ quesNum +"/option1");
-        option1Ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String choice=dataSnapshot.getValue(String.class);
-                option1RadioButton.setText(choice);
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
-        option2Ref=new Firebase("https://iddapp-17fcc.firebaseio.com/"+ quesNum +"/option2");
-        option2Ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String choice=dataSnapshot.getValue(String.class);
-                option2RadioButton.setText(choice);
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
-        quesNum++;
-
-    }
-*/
 
 }

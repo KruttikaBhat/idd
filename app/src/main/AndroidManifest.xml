@@ -22,10 +22,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".result" />
-        <activity android:name=".Quiz" />
+        <activity android:name=".Quiz" >
+
+        </activity>>
         <activity android:name=".Signup" />
         <activity
             android:name=".home"
