@@ -36,13 +36,14 @@ import java.util.Map;
 import java.util.Random;
 
 import weka.classifiers.Classifier;
+import weka.classifiers.trees.J48;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instances;
 
 public class result extends AppCompatActivity {
 
-    private TextView answersTextView,resultTextView;
+    private TextView answersTextView,resultTextView,graphTextView,desTextView,sourceTextView;
     private Button homeButton;
     private String print;
 
@@ -62,13 +63,15 @@ public class result extends AppCompatActivity {
 
     private Classifier mClassifier=null;
 
+    private J48 clsfr=null;
+
     private Random mRandom = new Random();
 
-    /*private Sample[] mSamples = new Sample[]{
-            new Sample(1, 0, new double[]{0, 0, 0, 0, 1, 0, 0, 0, 0, 0}), // should be in the setosa domain
-            //new Sample(2, 1, new double[]{0, 0, 0, 0, 1, 0, 1, 1, 1, 0}), // should be in the versicolor domain
+    private Sample[] mSamples = new Sample[]{
+            //new Sample(1, 0, new double[]{5, 3.5, 2, 0.4}), // should be in the setosa domain
+            new Sample(2, 1, new double[]{0,1,1,1,0,0,0,0,0,0,1,0,1,1}), // should be in the versicolor domain
             //new Sample(3, 2, new double[]{7, 3, 6.8, 2.1}) // should be in the virginica domain
-    };*/
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,9 @@ public class result extends AppCompatActivity {
 
 
         answersTextView=(TextView)findViewById(R.id.answers);
+        desTextView=(TextView)findViewById(R.id.des);
+        graphTextView=(TextView)findViewById(R.id.graph);
+        sourceTextView=(TextView)findViewById(R.id.source);
         resultTextView=(TextView)findViewById(R.id.resultTextView);
         homeButton=(Button)findViewById(R.id.homeButton);
 
@@ -106,7 +112,7 @@ public class result extends AppCompatActivity {
         predictLD();
 
 
-        //answersTextView.setText(toString(features));
+        answersTextView.setText(toString(features));
 
         /*if(user!=null){
             final String email=user.getEmail();
@@ -117,20 +123,16 @@ public class result extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-
                                 String number=documentSnapshot.getString(key_numassess);
                                 Integer newnumInt = (Integer.valueOf(number))+1;
                                 String newnumString=String.valueOf(newnumInt);
                                 Date c = Calendar.getInstance().getTime();
                                 System.out.println("Current time => " + c);
-
                                 SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
                                 String formattedDate = df.format(c);
                                 final Map<String, Object> child=new HashMap<>();
                                 child.put(key_result,result);
                                 child.put(key_date,formattedDate);
-
-
                                 db.collection(root).document(email).collection(childcollection).document(index).update(key_numassess,newnumString);
                                 db.collection(root).document(email).collection(childcollection).document(index).collection(key_assess).document(newnumString).set(child)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -140,8 +142,6 @@ public class result extends AppCompatActivity {
                                                 Toast.makeText(result.this,"Apdated result in database",Toast.LENGTH_LONG).show();
                                                 //Intent intent=new Intent(getActivity(),Quiz.class);
                                                 //startActivity(intent);
-
-
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -149,11 +149,8 @@ public class result extends AppCompatActivity {
                                             public void onFailure(@NonNull Exception e) {
                                                 Toast.makeText(result.this,"Error in registration",Toast.LENGTH_LONG).show();
                                                 Log.d("result",e.toString());
-
                                             }
                                         });
-
-
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -162,16 +159,10 @@ public class result extends AppCompatActivity {
                                 Toast.makeText(result.this, "Child document not found", Toast.LENGTH_SHORT).show();
                             }
                         });
-
-
-
             }
             else{
                 Toast.makeText(result.this, "Email can't be found", Toast.LENGTH_SHORT).show();
-
             }
-
-
         }*/
 
 
@@ -187,10 +178,11 @@ public class result extends AppCompatActivity {
 
     public void predictLD(){
 
-        String className = null;
+        //String className = null;
         AssetManager assetManager = getAssets();
         try {
-            mClassifier = (Classifier) weka.core.SerializationHelper.read(assetManager.open("dataset.model"));
+            //mClassifier = (Classifier) weka.core.SerializationHelper.read(assetManager.open("dataset.model"));
+            clsfr= (J48) weka.core.SerializationHelper.read(assetManager.open("dataset.model"));
             //Toast.makeText(this, "Model loaded.", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -202,6 +194,30 @@ public class result extends AppCompatActivity {
         }
         //Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
 
+
+        /*final Attribute attributeSepalLength = new Attribute("sepallength");
+        final Attribute attributeSepalWidth = new Attribute("sepalwidth");
+        final Attribute attributePetalLength = new Attribute("petallength");
+        final Attribute attributePetalWidth = new Attribute("petalwidth");
+        final List<String> classes = new ArrayList<String>() {
+            {
+                add("Iris-setosa"); // cls nr 1
+                add("Iris-versicolor"); // cls nr 2
+                add("Iris-virginica"); // cls nr 3
+            }
+        };
+
+        // Instances(...) requires ArrayList<> instead of List<>...
+        ArrayList<Attribute> attributeList = new ArrayList<Attribute>(2) {
+            {
+                add(attributeSepalLength);
+                add(attributeSepalWidth);
+                add(attributePetalLength);
+                add(attributePetalWidth);
+                Attribute attributeClass = new Attribute("@@class@@", classes);
+                add(attributeClass);
+            }
+        };*/
 
         final Attribute attribute1 = new Attribute("social");
         final Attribute attribute2 = new Attribute("nonverbal");
@@ -246,12 +262,16 @@ public class result extends AppCompatActivity {
             }
         };
 
-        Instances dataUnpredicted = new Instances("TestInstances",attributeList, 1);
+
+
+        // unpredicted data sets (reference to sample structure for new instances)
+        Instances dataUnpredicted = new Instances("TestInstances",
+                attributeList, 1);
         // last feature is target variable
         dataUnpredicted.setClassIndex(dataUnpredicted.numAttributes() - 1);
 
         // create new instance: this one should fall into the setosa domain
-
+        final Sample s = mSamples[0];
         DenseInstance newInstance = new DenseInstance(dataUnpredicted.numAttributes()) {
             {
                 setValue(attribute1, features[0]);
@@ -274,12 +294,20 @@ public class result extends AppCompatActivity {
         newInstance.setDataset(dataUnpredicted);
 
         try {
-            double result = mClassifier.classifyInstance(newInstance);
-            className = classes.get(new Double(result).intValue());
+            //double result = mClassifier.classifyInstance(newInstance);
+            double result = clsfr.classifyInstance(newInstance);
+            String className = classes.get(new Double(result).intValue());
             //String msg = "Nr: " + s.nr + ", predicted: " + className + ", actual: " + classes.get(s.label);
+            String source=clsfr.toSource(className);
+            String des=clsfr.toString();
+            String graph=clsfr.graph();
             //Log.d(WEKA_TEST, msg);
-            Toast.makeText(this, className, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
             resultTextView.setText(className);
+            sourceTextView.setText(source);
+            graphTextView.setText(graph);
+            desTextView.setText(des);
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -288,6 +316,26 @@ public class result extends AppCompatActivity {
 
 
 
+    }
+
+    public class Sample {
+        public int nr;
+        public int label;
+        public double [] features;
+
+        public Sample(int _nr, int _label, double[] _features) {
+            this.nr = _nr;
+            this.label = _label;
+            this.features = _features;
+        }
+
+        @Override
+        public String toString() {
+            return "Nr " +
+                    nr +
+                    ", cls " + label +
+                    ", feat: " + Arrays.toString(features);
+        }
     }
 
 

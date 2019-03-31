@@ -34,8 +34,8 @@ public class Quiz extends AppCompatActivity {
     private Button qButton[]=new Button[14];
 
     private long idList[] = {R.id.question1Button, R.id.question2Button, R.id.question3Button,R.id.question4Button,
-    R.id.question5Button,R.id.question6Button,R.id.question7Button,R.id.question8Button,R.id.question9Button,R.id.question10Button,
-    R.id.question11Button,R.id.question12Button,R.id.question13Button,R.id.question14Button};
+            R.id.question5Button,R.id.question6Button,R.id.question7Button,R.id.question8Button,R.id.question9Button,R.id.question10Button,
+            R.id.question11Button,R.id.question12Button,R.id.question13Button,R.id.question14Button};
 
 
     public int quesNum,categoryNum=1,numOfQues,count1=0,count2=0,total=0,
@@ -147,18 +147,18 @@ public class Quiz extends AppCompatActivity {
                             //Toast.makeText(Quiz.this, "Pre:"+pre+" current:"+currentQuestion, Toast.LENGTH_SHORT).show();
 
                         }else if(questions[i]!=null && answer[i]==null){
-                                option1RadioButton.setChecked(false);
-                                option2RadioButton.setChecked(false);
-                                questionTextView.setText(questions[i]);
-                                option1RadioButton.setText("yes");
-                                option2RadioButton.setText("no");
-                                qButton[pre].setBackgroundResource(R.drawable.round_shape);
-                                qButton[i].setBackgroundResource(R.drawable.round_shape_selected);
-                                pre=i;
-                                currentQuestion=i+1;
-                                quesnumTextView.setText("Question: "+String.valueOf(currentQuestion)+"/14");
+                            option1RadioButton.setChecked(false);
+                            option2RadioButton.setChecked(false);
+                            questionTextView.setText(questions[i]);
+                            option1RadioButton.setText("yes");
+                            option2RadioButton.setText("no");
+                            qButton[pre].setBackgroundResource(R.drawable.round_shape);
+                            qButton[i].setBackgroundResource(R.drawable.round_shape_selected);
+                            pre=i;
+                            currentQuestion=i+1;
+                            quesnumTextView.setText("Question: "+String.valueOf(currentQuestion)+"/14");
 
-                                //Toast.makeText(Quiz.this, "Pre:"+pre+" current:"+currentQuestion, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Quiz.this, "Pre:"+pre+" current:"+currentQuestion, Toast.LENGTH_SHORT).show();
 
                         }else{
                             Toast.makeText(Quiz.this, "Not yet answered", Toast.LENGTH_SHORT).show();
@@ -207,16 +207,15 @@ public class Quiz extends AppCompatActivity {
                             categoryName=documentSnapshot.getString("categoryName");
                             int min=1;
                             int max= numOfQues +1;
-                            if(count1==0 || count2==0){
-                                if(categoryName.equals("reading/spelling"))
-                                    count1++;
-                                if(categoryName.equals("dyslexia(other)"))
-                                    count2++;
-                                Random r = new Random();
-                                quesNum = r.nextInt(max - min) + min;
-                                storequesNum=quesNum;
-                            }
-                            else if(count1==1 || count2==1){
+                            Random r = new Random();
+                            quesNum = r.nextInt(max - min) + min;
+                            storequesNum=quesNum;
+                            if(categoryName.equals("reading/spelling"))
+                                count1++;
+                            else if(categoryName.equals("dyslexia(other)"))
+                                count2++;
+
+                            else if((count1==1 && count2==0) || (count1==1 && count2==1)){
                                 quesNum=max-storequesNum-1;
                             }
                             if(quesNum!=0){
@@ -245,9 +244,10 @@ public class Quiz extends AppCompatActivity {
 
                                                     }
                                                     questions[total]=question;
-                                                    //Toast.makeText(Quiz.this, "question stored:"+questions[total]+" total:"+String.valueOf(total), Toast.LENGTH_SHORT).show();
 
                                                     total++;
+                                                    //Toast.makeText(Quiz.this, "count1:"+String.valueOf(count1)+" count2:"+String.valueOf(count2)+" categoryName:"+categoryName+" categoryNum:"+String.valueOf(categoryNum)+" currentQues:"+currentQuestion+" total:"+String.valueOf(total), Toast.LENGTH_LONG).show();
+
 
 
                                                 } else{

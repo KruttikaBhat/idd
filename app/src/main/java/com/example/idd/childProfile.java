@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,21 +30,26 @@ import java.util.List;
 
 public class childProfile extends AppCompatActivity {
 
-    private TextView name,age,cclass,assessmentsDone;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private TextView name, age, cclass, assessmentsDone;
 
 
-    private FirebaseFirestore db=FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
 
     private Button quiz;
 
-    private static final String root="users";
-    private static final String childcollection="children";
-    private static final String key_assess="assessments";
-    private static final String key_numassess="numberOfAssessments";
-    private static final String key_name="Name";
-    private static final String key_age="Age";
-    private static final String key_class="Class";
+    private static final String root = "users";
+    private static final String childcollection = "children";
+    private static final String key_assess = "assessments";
+    private static final String key_numassess = "numberOfAssessments";
+    private static final String key_name = "Name";
+    private static final String key_age = "Age";
+    private static final String key_class = "Class";
 
 
     @Override
@@ -49,26 +57,41 @@ public class childProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_profile);
 
-        firebaseAuth= FirebaseAuth.getInstance();
-        final FirebaseUser user=firebaseAuth.getCurrentUser();
-        assessmentsDone=(TextView)findViewById(R.id.childAssessments);
-        name=(TextView)findViewById(R.id.childNameTextView);
-        age=(TextView)findViewById(R.id.childAgeTextView);
-        cclass=(TextView)findViewById(R.id.childClassTextView);
+        final ArrayList<assessData> List= new ArrayList<>();
+
+        List.add(new assessData("name1","age1","class1"));
+        List.add(new assessData("name2","age2","class2"));
+        List.add(new assessData("name3","age3","class3"));
+        recyclerView=findViewById(R.id.childProfileRecyclerView);
+        layoutManager=new LinearLayoutManager(this);
+        adapter=new assessAdapter(List);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
 
 
-        Bundle bundle=getIntent().getExtras();
-        final String index=bundle.getString("index");
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        //assessmentsDone = (TextView) findViewById(R.id.childAssessments);
+        name = (TextView) findViewById(R.id.childNameTextView);
+        age = (TextView) findViewById(R.id.childAgeTextView);
+        cclass = (TextView) findViewById(R.id.childClassTextView);
+
+
+        Bundle bundle = getIntent().getExtras();
+        final String index = bundle.getString("index");
         Toast.makeText(this, index, Toast.LENGTH_SHORT).show();
 
-        quiz=(Button)findViewById(R.id.assessmentButton);
+        quiz = (Button) findViewById(R.id.assessmentButton);
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(childProfile.this,Quiz.class);
-                Bundle bundle =new Bundle();
-                bundle.putString("index",index);
+                Intent intent = new Intent(childProfile.this, Quiz.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("index", index);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -77,25 +100,46 @@ public class childProfile extends AppCompatActivity {
 
 
 
-        if(user!=null){
-            final String email=user.getEmail();
-            if(email!=null) {
-                //Toast.makeText(home.this, email, Toast.LENGTH_SHORT).show();
-                db.collection(root).document(email).collection(childcollection).document(index).get()
+        if (user != null)
+
+            {
+                final String email = user.getEmail();
+                if (email != null) {
+                    //Toast.makeText(home.this, email, Toast.LENGTH_SHORT).show();
+                    db.collection(root).document(email).collection(childcollection).document(index).collection(key_assess)
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (DocumentSnapshot document: task.getResult()){
+                                    List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                                    Log.d("childProfile", document.getId() + " => " + document.getData());
+                                    Toast.makeText(childProfile.this, (CharSequence) myListOfDocuments, Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Log.d("childProfile", "error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+                }
+
+
+
+                /*db.collection(root).document(email).collection(childcollection).document(index).get()
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                String number=documentSnapshot.getString(key_numassess);
-                                String nameString=documentSnapshot.getString(key_name);
-                                String ageString=documentSnapshot.getString(key_age);
-                                String cclassString=documentSnapshot.getString(key_class);
+                                String number = documentSnapshot.getString(key_numassess);
+                                String nameString = documentSnapshot.getString(key_name);
+                                String ageString = documentSnapshot.getString(key_age);
+                                String cclassString = documentSnapshot.getString(key_class);
                                 name.setText(nameString);
                                 age.setText(ageString);
                                 cclass.setText(cclassString);
 
                                 Integer num = (Integer.valueOf(number));
 
-                                if(Integer.valueOf(number)==0){
+                                if (Integer.valueOf(number) == 0) {
                                     assessmentsDone.setText("No assessments done so far");
                                 }/*else{
 
@@ -121,7 +165,7 @@ public class childProfile extends AppCompatActivity {
                                     });
 
 
-                                }*/
+                                }
 
                             }
                         })
@@ -132,17 +176,32 @@ public class childProfile extends AppCompatActivity {
                             }
                         });
 
+            }*/
+                else {
+                    Toast.makeText(childProfile.this, "Email can't be found", Toast.LENGTH_SHORT).show();
+
+                }
+
+
             }
-            else{
-                Toast.makeText(childProfile.this, "Email can't be found", Toast.LENGTH_SHORT).show();
-
-            }
-
-
-        }
-
-
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    private List<assessData> getData()
+    {
+        List<assessData> list = new ArrayList<>();
+        list.add(new assessData("First Exam", "May 23, 2015", "Best Of Luck"));
+        list.add(new assessData("Second Exam", "June 09, 2015", "b of l"));
+        list.add(new assessData("My Test Exam", "April 27, 2017", "This is testing exam .."));
+        return list;
+    }
+
+
+
 }
