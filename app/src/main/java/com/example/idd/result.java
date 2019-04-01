@@ -3,6 +3,7 @@ package com.example.idd;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +46,7 @@ import weka.core.Instances;
 public class result extends AppCompatActivity {
 
     private TextView answersTextView,resultTextView,graphTextView,desTextView,sourceTextView;
-    private Button homeButton;
+    private Button homeButton,contactButton,moreButton;
     private String print;
 
     private static final String root="users";
@@ -53,11 +55,16 @@ public class result extends AppCompatActivity {
     private static final String childcollection="children";
     private static final String key_assess="assessments";
     private static final String key_numassess="numberOfAssessments";
+    private static final String key_des="description";
+    private static final String key_input="input";
 
 
     private FirebaseFirestore db=FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
 
+    private String index,describe=null,className=null;
+    private String[] answer=new String[14];
+    private String[] questions=new String[14];
 
     private double[] features= new double[14];
 
@@ -66,6 +73,16 @@ public class result extends AppCompatActivity {
     private J48 clsfr=null;
 
     private Random mRandom = new Random();
+
+    private TextView q[]=new TextView[14];
+    private TextView a[]=new TextView[14];
+
+    private int qid[] = {R.id.ques1, R.id.ques2,R.id.ques3,R.id.ques4,R.id.ques5,R.id.ques6,R.id.ques7,
+            R.id.ques8,R.id.ques9,R.id.ques10,R.id.ques11,R.id.ques12,R.id.ques13,R.id.ques14};
+    private int aid[] = {R.id.ans1, R.id.ans2,R.id.ans3,R.id.ans4,R.id.ans5,R.id.ans6,R.id.ans7,
+            R.id.ans8,R.id.ans9,R.id.ans10,R.id.ans11,R.id.ans12,R.id.ans13,R.id.ans14};
+
+
 
     private Sample[] mSamples = new Sample[]{
             //new Sample(1, 0, new double[]{5, 3.5, 2, 0.4}), // should be in the setosa domain
@@ -78,8 +95,6 @@ public class result extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        firebaseAuth= FirebaseAuth.getInstance();
-        final FirebaseUser user=firebaseAuth.getCurrentUser();
 
 
         answersTextView=(TextView)findViewById(R.id.answers);
@@ -88,6 +103,8 @@ public class result extends AppCompatActivity {
         sourceTextView=(TextView)findViewById(R.id.source);
         resultTextView=(TextView)findViewById(R.id.resultTextView);
         homeButton=(Button)findViewById(R.id.homeButton);
+        contactButton=(Button)findViewById(R.id.contactSpecialist);
+        moreButton=(Button)findViewById(R.id.MoreOnLD);
 
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,26 +114,82 @@ public class result extends AppCompatActivity {
             }
         });
 
+        contactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContactFragment fragment = new ContactFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.contactSpecialist, fragment);
+                transaction.commit();
+            }
+        });
+
+        moreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MoreOnLDFragment fragment = new MoreOnLDFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.MoreOnLD, fragment);
+                transaction.commit();
+            }
+        });
+
         Bundle bundle=getIntent().getExtras();
-        String answer[]=bundle.getStringArray("key");
-        final String index=bundle.getString("index");
+        answer=bundle.getStringArray("key");
+        questions=bundle.getStringArray("ques");
+        index=bundle.getString("index");
 
 
         for(int i=0;i<14;i++){
+            q[i]=(TextView)findViewById(qid[i]);
+            a[i]=(TextView)findViewById(aid[i]);
+            q[i].setText("Q"+String.valueOf(i+1)+": "+questions[i]);
+            a[i].setText("A:"+answer[i]);
+
             if(answer[i].equals("yes"))
                 features[i]=0;
             else
                 features[i]=1;
+
+
         }
 
         predictLD();
 
+        final String[] sum= {"-> question 11 (tests writing)","-> question 13 (checks for certain dyslexic features)",
+        "-> question 9 (checks reading)"};
 
-        answersTextView.setText(toString(features));
+        switch(answer[10]){         //N0[label="writing"]
+            case "yes":             //N0->N1[label<=0]
+                switch(answer[12]){  //N1[label="other_2"]
+                    case "yes":      //N1->N2[label<=0]
+                        switch(answer[8]){     //N2[label="reading_1"]
+                            case "yes":   //N2->N3[label<=0]
+                                describe="The result is dyslexia because you answered yes to \n"+sum[2]+"\n"+sum[0]+"\n"+sum[1];
+                                break; //N3[label=dyslexia]
+                            case "no":
+                                describe="The result is autism because you answered yes to \n"+sum[0]+"\n"+sum[1]+
+                                        "\nand no to\n"+sum[1];
+                                break; //N4[label=autism]
+                        }
+                        break;
+                    case "no":
+                        describe="The result is autistic-features because you answered yes to \n"+sum[0]+"\nand no to\n"+sum[1];
+                        break;
+
+                }
+
+                break;
+            case "no":
+                describe="The result is autistic-features because you answered no to \n"+sum[0];
+                break;
+        }
+
+
+        answersTextView.setText(describe);
 
         /*if(user!=null){
             final String email=user.getEmail();
-            final String result=predictLD();
             if(email!=null) {
                 //Toast.makeText(home.this, email, Toast.LENGTH_SHORT).show();
                 db.collection(root).document(email).collection(childcollection).document(index).get()
@@ -195,29 +268,7 @@ public class result extends AppCompatActivity {
         //Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
 
 
-        /*final Attribute attributeSepalLength = new Attribute("sepallength");
-        final Attribute attributeSepalWidth = new Attribute("sepalwidth");
-        final Attribute attributePetalLength = new Attribute("petallength");
-        final Attribute attributePetalWidth = new Attribute("petalwidth");
-        final List<String> classes = new ArrayList<String>() {
-            {
-                add("Iris-setosa"); // cls nr 1
-                add("Iris-versicolor"); // cls nr 2
-                add("Iris-virginica"); // cls nr 3
-            }
-        };
 
-        // Instances(...) requires ArrayList<> instead of List<>...
-        ArrayList<Attribute> attributeList = new ArrayList<Attribute>(2) {
-            {
-                add(attributeSepalLength);
-                add(attributeSepalWidth);
-                add(attributePetalLength);
-                add(attributePetalWidth);
-                Attribute attributeClass = new Attribute("@@class@@", classes);
-                add(attributeClass);
-            }
-        };*/
 
         final Attribute attribute1 = new Attribute("social");
         final Attribute attribute2 = new Attribute("nonverbal");
@@ -296,7 +347,7 @@ public class result extends AppCompatActivity {
         try {
             //double result = mClassifier.classifyInstance(newInstance);
             double result = clsfr.classifyInstance(newInstance);
-            String className = classes.get(new Double(result).intValue());
+            className = classes.get(new Double(result).intValue());
             //String msg = "Nr: " + s.nr + ", predicted: " + className + ", actual: " + classes.get(s.label);
             String source=clsfr.toSource(className);
             String des=clsfr.toString();
@@ -308,6 +359,62 @@ public class result extends AppCompatActivity {
             graphTextView.setText(graph);
             desTextView.setText(des);
 
+            //store in database
+
+            firebaseAuth= FirebaseAuth.getInstance();
+            final FirebaseUser user=firebaseAuth.getCurrentUser();
+
+            if(user!=null && className!=null){
+                final String email=user.getEmail();
+                if(email!=null) {
+                    //Toast.makeText(home.this, email, Toast.LENGTH_SHORT).show();
+                    db.collection(root).document(email).collection(childcollection).document(index).get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    String number=documentSnapshot.getString(key_numassess);
+                                    Integer newnumInt = (Integer.valueOf(number))+1;
+                                    String newnumString=String.valueOf(newnumInt);
+                                    Calendar calendar=Calendar.getInstance();
+                                    String currentDate= DateFormat.getDateInstance(DateFormat.LONG).format(calendar.getTime());
+                                    final Map<String, Object> child=new HashMap<>();
+                                    child.put("index",newnumString);
+                                    child.put(key_date,currentDate);
+                                    child.put(key_result,className);
+                                    child.put(key_input,getInput());
+                                    child.put(key_des,describe);
+                                    db.collection(root).document(email).collection(childcollection).document(index).update(key_numassess,newnumString);
+                                    db.collection(root).document(email).collection(childcollection).document(index).collection(key_assess).document(newnumString).set(child)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    //Toast.makeText(Signup.this,"New user created",Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(result.this,"Updated result in database",Toast.LENGTH_LONG).show();
+                                                    //Intent intent=new Intent(getActivity(),Quiz.class);
+                                                    //startActivity(intent);
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(result.this,"Error in registration",Toast.LENGTH_LONG).show();
+                                                    Log.d("result",e.toString());
+                                                }
+                                            });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(result.this, "Child document not found", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+                else{
+                    Toast.makeText(result.this, "Email can't be found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -318,6 +425,13 @@ public class result extends AppCompatActivity {
 
     }
 
+    public String getInput(){
+        String input="";
+        for(int i=0;i<14;i++){
+            input=input+"Q"+String.valueOf(i+1)+": "+questions[i]+"(Answered:"+answer[i]+")\n";
+        }
+        return input;
+    }
     public class Sample {
         public int nr;
         public int label;

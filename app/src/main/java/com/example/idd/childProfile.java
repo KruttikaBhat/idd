@@ -21,16 +21,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 public class childProfile extends AppCompatActivity {
 
 
+    private static final String TAG = "Firelog";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -50,6 +55,9 @@ public class childProfile extends AppCompatActivity {
     private static final String key_name = "Name";
     private static final String key_age = "Age";
     private static final String key_class = "Class";
+    private static final String key_date = "date";
+    private static final String key_des = "description";
+    private static final String key_result = "result";
 
 
     @Override
@@ -106,21 +114,44 @@ public class childProfile extends AppCompatActivity {
                 final String email = user.getEmail();
                 if (email != null) {
                     //Toast.makeText(home.this, email, Toast.LENGTH_SHORT).show();
-                    db.collection(root).document(email).collection(childcollection).document(index).collection(key_assess)
-                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (DocumentSnapshot document: task.getResult()){
-                                    List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
-                                    Log.d("childProfile", document.getId() + " => " + document.getData());
-                                    Toast.makeText(childProfile.this, (CharSequence) myListOfDocuments, Toast.LENGTH_SHORT).show();
+                    db.collection(root).document(email).collection(childcollection).document(index).get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    String cname = documentSnapshot.getString(key_name);
+                                    String cage = documentSnapshot.getString(key_age);
+                                    String ccls = documentSnapshot.getString(key_class);
+                                    name.setText(cname);
+                                    age.setText(cage);
+                                    cclass.setText(ccls);
+
+                                    db.collection(root).document(email).collection(childcollection).document(index).collection(key_assess)
+                                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                                    if (e != null) {
+                                                        Log.d(TAG, "Error: " + e.getMessage());
+                                                    }
+                                                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                                                        String date = doc.getString(key_date);
+                                                        String result = doc.getString(key_result);
+                                                        String des = doc.getString(key_des);
+                                                        Log.d(TAG, "Date:" + date + " Result:" + result + " Description:" + des);
+                                                    }
+
+                                                }
+                                            });
                                 }
-                            } else {
-                                Log.d("childProfile", "error getting documents: ", task.getException());
-                            }
-                        }
-                    });
+
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(childProfile.this, "Couldn't retrieve child info", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
                 }
 
 

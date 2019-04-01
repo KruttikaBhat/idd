@@ -91,6 +91,7 @@ public class Quiz extends AppCompatActivity {
                     Intent intent=new Intent(Quiz.this,result.class);
                     Bundle bundle =new Bundle();
                     bundle.putStringArray("key",answer);
+                    bundle.putStringArray("ques",questions);
                     bundle.putString("index",index);
                     intent.putExtras(bundle);
                     Quiz.this.finish();
