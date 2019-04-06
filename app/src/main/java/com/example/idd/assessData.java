@@ -2,10 +2,15 @@ package com.example.idd;
 
 public class assessData {
     private String date,result,description;
+
+    public assessData(){
+
+    }
+
     public assessData(String d, String r,String des){
-        date=d;
-        result=r;
-        description=des;
+        this.date=d;
+        this.result=r;
+        this.description=des;
     }
 
     public String getDate(){

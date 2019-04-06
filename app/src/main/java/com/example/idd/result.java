@@ -77,11 +77,11 @@ public class result extends AppCompatActivity {
     private TextView q[]=new TextView[14];
     private TextView a[]=new TextView[14];
 
-    private int qid[] = {R.id.ques1, R.id.ques2,R.id.ques3,R.id.ques4,R.id.ques5,R.id.ques6,R.id.ques7,
+    /*private int qid[] = {R.id.ques1, R.id.ques2,R.id.ques3,R.id.ques4,R.id.ques5,R.id.ques6,R.id.ques7,
             R.id.ques8,R.id.ques9,R.id.ques10,R.id.ques11,R.id.ques12,R.id.ques13,R.id.ques14};
     private int aid[] = {R.id.ans1, R.id.ans2,R.id.ans3,R.id.ans4,R.id.ans5,R.id.ans6,R.id.ans7,
             R.id.ans8,R.id.ans9,R.id.ans10,R.id.ans11,R.id.ans12,R.id.ans13,R.id.ans14};
-
+*/
 
 
     private Sample[] mSamples = new Sample[]{
@@ -98,9 +98,9 @@ public class result extends AppCompatActivity {
 
 
         answersTextView=(TextView)findViewById(R.id.answers);
-        desTextView=(TextView)findViewById(R.id.des);
-        graphTextView=(TextView)findViewById(R.id.graph);
-        sourceTextView=(TextView)findViewById(R.id.source);
+        //desTextView=(TextView)findViewById(R.id.des);
+        //graphTextView=(TextView)findViewById(R.id.graph);
+        //sourceTextView=(TextView)findViewById(R.id.source);
         resultTextView=(TextView)findViewById(R.id.resultTextView);
         homeButton=(Button)findViewById(R.id.homeButton);
         contactButton=(Button)findViewById(R.id.contactSpecialist);
@@ -114,25 +114,7 @@ public class result extends AppCompatActivity {
             }
         });
 
-        contactButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContactFragment fragment = new ContactFragment();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.contactSpecialist, fragment);
-                transaction.commit();
-            }
-        });
 
-        moreButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MoreOnLDFragment fragment = new MoreOnLDFragment();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.MoreOnLD, fragment);
-                transaction.commit();
-            }
-        });
 
         Bundle bundle=getIntent().getExtras();
         answer=bundle.getStringArray("key");
@@ -141,10 +123,10 @@ public class result extends AppCompatActivity {
 
 
         for(int i=0;i<14;i++){
-            q[i]=(TextView)findViewById(qid[i]);
-            a[i]=(TextView)findViewById(aid[i]);
-            q[i].setText("Q"+String.valueOf(i+1)+": "+questions[i]);
-            a[i].setText("A:"+answer[i]);
+            //q[i]=(TextView)findViewById(qid[i]);
+            //a[i]=(TextView)findViewById(aid[i]);
+            //q[i].setText("Q"+String.valueOf(i+1)+": "+questions[i]);
+            //a[i].setText("A:"+answer[i]);
 
             if(answer[i].equals("yes"))
                 features[i]=0;
@@ -156,87 +138,132 @@ public class result extends AppCompatActivity {
 
         predictLD();
 
-        final String[] sum= {"-> question 11 (tests writing)","-> question 13 (checks for certain dyslexic features)",
-        "-> question 9 (checks reading)"};
 
-        switch(answer[10]){         //N0[label="writing"]
-            case "yes":             //N0->N1[label<=0]
-                switch(answer[12]){  //N1[label="other_2"]
-                    case "yes":      //N1->N2[label<=0]
-                        switch(answer[8]){     //N2[label="reading_1"]
-                            case "yes":   //N2->N3[label<=0]
-                                describe="The result is dyslexia because you answered yes to \n"+sum[2]+"\n"+sum[0]+"\n"+sum[1];
-                                break; //N3[label=dyslexia]
+        switch(answer[6]){
+            case "yes":
+                switch(answer[3]){
+                    case "yes":
+                        switch(answer[9]){
+                            case "yes":
+                                switch(answer[2]){
+                                    case "yes":
+                                        describe="The result is dyslexia because you answered yes to \""
+                                                +questions[2]+"\" (indicates deficits in social-emotional reciprocity)\n\""
+                                                +questions[3]+"\" (indicates deficits in developing and maintaining relationships)\n\""
+                                                +questions[6]+"\" (indicates highly restricted, fixated interest which are abnormal in intensity)\nand \""
+                                                +questions[9]+"\" (has trouble in reading/spelling)";
+                                        break;
+                                    case "no":
+                                        describe="The result is autistic features because you answered yes to \""
+                                                +questions[3]+"\" (indicates deficits in developing and maintaining relationships)\n\""
+                                                +questions[6]+"\" (indicates highly restricted, fixated interest which are abnormal in intensity)\n\""
+                                                +questions[9]+"\" (has trouble in reading/spelling)\nand no to \""
+                                                +questions[2]+"\" (indicates deficits in social-emotional reciprocity)";
+
+                                        break;
+                                }
+
+                                break;
                             case "no":
-                                describe="The result is autism because you answered yes to \n"+sum[0]+"\n"+sum[1]+
-                                        "\nand no to\n"+sum[1];
-                                break; //N4[label=autism]
+                                describe="The result is autistic features because you answered yes to \""
+                                        +questions[3]+"\" (indicates deficits in developing and maintaining relationships)\n\""
+                                        +questions[6]+"\" (indicates highly restricted, fixated interest which are abnormal in intensity)\nand no to \""
+                                        +questions[9]+"\" (has trouble in reading/spelling)";
+                                break;
                         }
                         break;
                     case "no":
-                        describe="The result is autistic-features because you answered yes to \n"+sum[0]+"\nand no to\n"+sum[1];
-                        break;
+                        switch(answer[2]){
+                            case "yes":
+                                describe="The result is autistic features because you answered yes to \""
+                                        +questions[6]+"\" (indicates highly restricted, fixated interest which are abnormal in intensity)\n\""
+                                        +questions[2]+"\" (indicates deficits in social-emotional reciprocity)\"\n and no to \""
+                                        +questions[3]+"\" (indicates deficits in developing and maintaining relationships)\n\"";
+                                break;
+                            case "no":
+                                switch(answer[7]){
+                                    case "yes":
+                                        switch(answer[1]){
+                                            case "yes":
+                                                describe="The result is autistic features because you answered yes to \""
+                                                        +questions[6]+"\" (indicates highly restricted, fixated interest which are abnormal in intensity)\n\""
+                                                        +questions[7]+"\" (indicates hyper/hypo reactivity to sensory input)\n\""
+                                                        +questions[1]+"\" (indicates deficits in non verbal communicative behaviors) \nand no to \""
+                                                        +questions[3]+"\" (indicates deficits in developing and maintaining relationships)\n\""
+                                                        +questions[2]+"\" (indicates deficits in social-emotional reciprocity)\"";
 
+                                                break;
+                                            case "no":
+                                                describe="The result is autism because you answered yes to \""
+                                                        +questions[6]+"\" (indicates highly restricted, fixated interest which are abnormal in intensity)\n\""
+                                                        +questions[7]+"\" (indicates hyper/hypo reactivity to sensory input)\n and no to \""
+                                                        +questions[1]+"\" (indicates deficits in non verbal communicative behaviors) \n\""
+                                                        +questions[2]+"\" (indicates deficits in social-emotional reciprocity)\""
+                                                        +questions[3]+"\" (indicates deficits in developing and maintaining relationships)\n\"";
+
+                                                break;
+                                        }
+                                        break;
+                                    case "no":
+                                        describe="The result is autistic features because you answered yes to \""
+                                                +questions[6]+"\" (indicates highly restricted, fixated interest which are abnormal in intensity)\n and no to\""
+                                                +questions[7]+"\" (indicates hyper/hypo reactivity to sensory input)\n and no to \""
+                                                +questions[2]+"\" (indicates deficits in social-emotional reciprocity)\""
+                                                +questions[3]+"\" (indicates deficits in developing and maintaining relationships)\n\"";
+
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
                 }
 
                 break;
             case "no":
-                describe="The result is autistic-features because you answered no to \n"+sum[0];
+                switch (answer[13]){
+                    case "yes":
+                        switch(answer[9]){
+                            case "yes":
+                                switch(answer[1]){
+                                    case "yes":
+                                        describe="The result is normal because you answered yes to \""
+                                                +questions[9]+"\" (has trouble in reading/spelling)"
+                                                +questions[13]+"\" (creativity)\n\""
+                                                +questions[1]+"\" (deficits in social-emotional reciprocity)\n and no to\""
+                                                +questions[6]+"\" (indicates highly restricted, fixated interest which are abnormal in intensity)\nand \"";
+                                        break;
+                                    case "no":
+                                        describe="The result is autistic-features because you answered yes to \""
+                                                +questions[9]+"\" (has trouble in reading/spelling)"
+                                                +questions[13]+"\" (creativity)\nand no to\""
+                                                +questions[1]+"\" (deficits in social-emotional reciprocity)\n\""
+                                                +questions[6]+"\" (indicates highly restricted, fixated interest which are abnormal in intensity)\nand \"";
+                                        break;
+
+                                }
+                                break;
+                            case "no":
+                                describe="The result is normal because you answered yes to \""
+                                        +questions[13]+"\" (creativity)\n and no to \""
+                                        +questions[9]+"\" (has trouble in reading/spelling)\n\""
+                                        +questions[6]+"\" (indicates highly restricted, fixated interest which are abnormal in intensity)";
+                                break;
+                        }
+                        break;
+                    case "no":
+                        describe="The result is autistic-features because you answered no to \""
+                                +questions[13]+"\" (creativity)\n and no to \""
+                                +questions[6]+"\" (indicates highly restricted, fixated interest which are abnormal in intensity)";
+                        break;
+                }
                 break;
         }
 
 
+
         answersTextView.setText(describe);
 
-        /*if(user!=null){
-            final String email=user.getEmail();
-            if(email!=null) {
-                //Toast.makeText(home.this, email, Toast.LENGTH_SHORT).show();
-                db.collection(root).document(email).collection(childcollection).document(index).get()
-                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                String number=documentSnapshot.getString(key_numassess);
-                                Integer newnumInt = (Integer.valueOf(number))+1;
-                                String newnumString=String.valueOf(newnumInt);
-                                Date c = Calendar.getInstance().getTime();
-                                System.out.println("Current time => " + c);
-                                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-                                String formattedDate = df.format(c);
-                                final Map<String, Object> child=new HashMap<>();
-                                child.put(key_result,result);
-                                child.put(key_date,formattedDate);
-                                db.collection(root).document(email).collection(childcollection).document(index).update(key_numassess,newnumString);
-                                db.collection(root).document(email).collection(childcollection).document(index).collection(key_assess).document(newnumString).set(child)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                //Toast.makeText(Signup.this,"New user created",Toast.LENGTH_LONG).show();
-                                                Toast.makeText(result.this,"Apdated result in database",Toast.LENGTH_LONG).show();
-                                                //Intent intent=new Intent(getActivity(),Quiz.class);
-                                                //startActivity(intent);
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(result.this,"Error in registration",Toast.LENGTH_LONG).show();
-                                                Log.d("result",e.toString());
-                                            }
-                                        });
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(result.this, "Child document not found", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-            else{
-                Toast.makeText(result.this, "Email can't be found", Toast.LENGTH_SHORT).show();
-            }
-        }*/
+
 
 
     }
@@ -255,7 +282,7 @@ public class result extends AppCompatActivity {
         AssetManager assetManager = getAssets();
         try {
             //mClassifier = (Classifier) weka.core.SerializationHelper.read(assetManager.open("dataset.model"));
-            clsfr= (J48) weka.core.SerializationHelper.read(assetManager.open("dataset.model"));
+            clsfr= (J48) weka.core.SerializationHelper.read(assetManager.open("dataset1.model"));
             //Toast.makeText(this, "Model loaded.", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -289,6 +316,7 @@ public class result extends AppCompatActivity {
                 add("autism"); // cls nr 1
                 add("autistic-features"); // cls nr 2
                 add("dyslexia"); // cls nr 3
+                add("normal");
             }
         };
 
@@ -312,6 +340,8 @@ public class result extends AppCompatActivity {
                 add(attributeClass);
             }
         };
+
+
 
 
 
@@ -355,9 +385,9 @@ public class result extends AppCompatActivity {
             //Log.d(WEKA_TEST, msg);
             //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
             resultTextView.setText(className);
-            sourceTextView.setText(source);
-            graphTextView.setText(graph);
-            desTextView.setText(des);
+            //sourceTextView.setText(source);
+            //graphTextView.setText(graph);
+            //desTextView.setText(des);
 
             //store in database
 

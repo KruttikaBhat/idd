@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="4dp"
-    app:cardCornerRadius="4dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp">
 
     <RelativeLayout
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_margin="4dp">
+        android:layout_width="wrap_content"
+        android:padding="8dp">
         <TextView
             android:id="@+id/textViewChildIndex"
             android:layout_width="wrap_content"
@@ -25,19 +26,23 @@
         <TextView
             android:id="@+id/textViewNameLabel"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:textStyle="bold"
-            android:textSize="24sp"
             android:text="Name :"/>
         <TextView
             android:id="@+id/textViewAgeLabel"
             android:layout_below="@+id/textViewNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:text="Age :"/>
         <TextView
@@ -45,35 +50,42 @@
             android:id="@+id/textViewClassLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:text="Class :"/>
         <TextView
             android:id="@+id/textViewChildName"
             android:layout_toRightOf="@+id/textViewNameLabel"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:textSize="20sp"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="3.8dp"
             android:text="somename"/>
         <TextView
             android:id="@+id/textViewChildAge"
             android:layout_toRightOf="@+id/textViewAgeLabel"
             android:layout_below="@+id/textViewChildName"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:layout_marginLeft="16dp"
-            android:textSize="20sp"
             android:text="someage"/>
         <TextView
             android:id="@+id/textViewChildClass"
             android:layout_toRightOf="@+id/textViewClassLabel"
             android:layout_below="@+id/textViewChildAge"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:layout_marginLeft="16dp"
-            android:textSize="20sp"
             android:text="someclass"/>
 
 

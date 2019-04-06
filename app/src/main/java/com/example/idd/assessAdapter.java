@@ -21,6 +21,8 @@ public class assessAdapter extends RecyclerView.Adapter<assessAdapter.AssessView
 
     public static class AssessViewHolder extends RecyclerView.ViewHolder{
 
+
+
         public TextView assessDate;
         public TextView assessResult;
         public TextView assessDescription;
@@ -36,7 +38,7 @@ public class assessAdapter extends RecyclerView.Adapter<assessAdapter.AssessView
     }
 
     public assessAdapter(ArrayList<assessData> assessList) {
-        mAssessList=assessList;
+        this.mAssessList=assessList;
     }
 
     @NonNull

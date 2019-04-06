@@ -4,108 +4,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="25dp"
     android:background="#FFFFFF"
     tools:context=".childProfile">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
 
-        <TextView
-            android:id="@+id/childProfileHeading"
+        android:padding="8dp">
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Child Profile"
-            android:textSize="32dp"
-            />
-        <Button
-            android:id="@+id/assessmentButton"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/childProfileHeading"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="32dp"
-            android:layout_marginLeft="32dp"
-            android:textSize="20dp"
-            android:layout_marginTop="32dp"
-            android:gravity="center_horizontal"
-            android:text="Perform Assessment"/>
+            android:src="@drawable/student_prof"
+            android:tint="#99FFFFFF"
+            android:tintMode="src_over"/>
         <TextView
             android:id="@+id/childNameHeading"
-            android:layout_below="@+id/assessmentButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name: "
             android:layout_marginTop="16dp"
-            android:textSize="28dp"
+            android:textSize="20sp"
+            android:text="Name"
             />
+
         <TextView
             android:id="@+id/childNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/childNameHeading"
-            android:layout_below="@id/assessmentButton"
-            android:layout_marginTop="16dp"
+            android:layout_below="@+id/childNameHeading"
+            android:layout_marginTop="8dp"
             android:layout_marginLeft="16dp"
-            android:textSize="28dp"
+            android:textSize="24sp"
+            android:textColor="@color/colorBlack"
+            android:text="something"
             />
+
         <TextView
             android:id="@+id/childAgeHeading"
-            android:layout_below="@+id/childNameHeading"
-            android:layout_marginTop="16dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Age: "
-            android:textSize="28dp"
+            android:layout_below="@id/childNameTextView"
+            android:layout_marginTop="16dp"
+            android:textSize="20sp"
+            android:text="Age"
             />
         <TextView
             android:id="@+id/childAgeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/childAgeHeading"
-            android:layout_below="@id/childNameHeading"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginLeft="16dp"
-            android:textSize="28dp"
+            android:layout_below="@+id/childAgeHeading"
+            android:textSize="24sp"
+            android:textColor="@color/colorBlack"
             />
 
         <TextView
             android:id="@+id/childClassHeading"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/childAgeHeading"
             android:layout_marginTop="16dp"
-            android:text="Class: "
-            android:textSize="28dp"
+            android:layout_below="@id/childAgeTextView"
+            android:textSize="20sp"
+            android:text="Class"
             />
         <TextView
             android:id="@+id/childClassTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/childClassHeading"
-            android:layout_below="@id/childAgeHeading"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginLeft="16dp"
-            android:textSize="28dp"
+            android:layout_below="@id/childClassHeading"
+            android:textSize="24sp"
+            android:textColor="@color/colorBlack"
             />
 
+
+        <Button
+            android:id="@+id/assessmentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="16dp"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:padding="12dp"
+            android:layout_below="@id/childClassTextView"
+            android:text="Perform Assessment"/>
         <TextView
             android:id="@+id/childAssessments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Assessments Done"
-            android:layout_below="@id/childClassHeading"
-            android:layout_marginTop="16dp"
-            android:textSize="32dp"
+            android:layout_below="@id/assessmentButton"
+            android:layout_marginTop="20dp"
+            android:textSize="24sp"
             />
+        <View
+            android:id="@+id/horizontalLine"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/childAssessments"
+            android:background="#c0c0c0"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/childProfileRecyclerView"
-            android:layout_below="@id/childAssessments"
+            android:layout_below="@id/horizontalLine"
             android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="match_parent"/>
-
 
 
     </RelativeLayout>

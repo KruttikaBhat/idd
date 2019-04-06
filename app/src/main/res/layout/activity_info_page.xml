@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".InfoPage">
+
+    <TextView
+        android:id="@+id/smartText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SMART MODEL"
+        android:layout_above="@+id/smart"
+        android:textSize="20sp"
+        android:layout_marginLeft="24dp"
+        android:fontFamily="sans-serif-condensed"
+        />
+    <ImageView
+        android:id="@+id/smart"
+        android:src="@drawable/smart"
+        android:layout_above="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="24dp"
+        android:layout_alignParentLeft="true"
+
+        />
+    <TextView
+        android:id="@+id/hassleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HASSLE FREE"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_above="@+id/hasslefree"
+        android:layout_marginRight="24dp"
+        android:layout_alignParentRight="true"
+        android:textSize="20sp"
+
+        />
+    <ImageView
+        android:id="@+id/hasslefree"
+        android:src="@drawable/hasselfree"
+        android:layout_above="@+id/logo"
+        android:layout_marginRight="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+
+        />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/logowithtext"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="16dp"
+        />
+
+    <ImageView
+        android:id="@+id/question"
+        android:src="@drawable/question"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="24dp"
+        android:layout_below="@+id/logo"
+        android:layout_alignParentLeft="true"
+
+        />
+    <ImageView
+        android:id="@+id/specialist"
+        android:src="@drawable/childspecialist"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="24dp"
+        android:layout_below="@+id/logo"
+        android:layout_alignParentRight="true"
+
+        />
+
+    <TextView
+        android:id="@+id/specialistText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Assess a child as good as a Specialist"
+        android:layout_below="@+id/specialist"
+        android:layout_centerInParent="true"
+        android:textSize="20sp"
+
+        />
+
+    <Button
+        android:id="@+id/beginInfoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/specialistText"
+        android:layout_marginTop="16dp"
+        android:layout_centerInParent="true"
+        android:text="begin"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorPrimary"
+        android:textSize="16sp"/>
+
+
+</RelativeLayout>

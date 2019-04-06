@@ -9,6 +9,8 @@
     <color name="colorGreen">#708090</color>
     <color name="colorGrey">#BEBEBE</color>
     <color name="colorPurple">#96767C</color>
+    <color name="colorBlack">#000000</color>
     <color name="background_color">#009688</color>
     <color name="button_selectorcolor">#9E9E9E</color>
+
 </resources>

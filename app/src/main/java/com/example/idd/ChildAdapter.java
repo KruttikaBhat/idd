@@ -69,15 +69,15 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHol
     }
 
     public ChildAdapter(ArrayList<ChildItem> childList) {
-        mChildList=childList;
+        this.mChildList=childList;
     }
 
     @NonNull
     @Override
     public ChildViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.child_item, viewGroup, false);
-        ChildViewHolder cvh= new ChildViewHolder(v, mListener);
-        return cvh;
+        ChildViewHolder holder= new ChildViewHolder(v, mListener);
+        return holder;
     }
 
     @Override

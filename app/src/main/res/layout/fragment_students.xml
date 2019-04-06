@@ -9,7 +9,7 @@
         android:id="@+id/studentRecyclerView"
         android:padding="4dp"
         android:scrollbars="vertical"
-        android:background="@android:color/darker_gray"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

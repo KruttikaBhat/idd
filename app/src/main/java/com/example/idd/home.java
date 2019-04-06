@@ -107,13 +107,14 @@ public class home extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.nav_mystudents:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new StudentsFragment()).commit();
                 break;
-            case R.id.nav_about:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AboutUsFragment()).commit();
-                break;
+
             case R.id.nav_signout:
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 startActivity(new Intent(this,MainActivity.class));
+                break;
+
+
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

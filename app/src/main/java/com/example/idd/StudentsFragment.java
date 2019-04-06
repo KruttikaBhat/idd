@@ -18,10 +18,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 public class StudentsFragment extends Fragment {
 
@@ -76,6 +82,26 @@ public class StudentsFragment extends Fragment {
         if(user!=null){
             final String email=user.getEmail();
             if(email!=null) {
+
+                /*db.collection(root).document(email).collection(childcollection)
+                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                                if (e != null) {
+                                    Log.d(TAG, "Error: " + e.getMessage());
+                                }
+                                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                    if(doc.getType()==DocumentChange.Type.ADDED){
+                                        ChildItem data=doc.getDocument().toObject(ChildItem.class);
+                                        childList.add(data);
+                                        adapter.notifyDataSetChanged();
+                                    }
+
+                                }
+                            }
+                        });*/
+
+
                 //Toast.makeText(home.this, email, Toast.LENGTH_SHORT).show();
                 db.collection(root).document(email).get()
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

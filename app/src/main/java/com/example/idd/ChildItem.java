@@ -3,11 +3,15 @@ package com.example.idd;
 public class ChildItem {
     private String childName,childAge,childClass,childIndex;
 
+    public ChildItem(){
+
+    }
+
     public ChildItem(String cName,String cAge,String cClass,String cIndex){
-        childName=cName;
-        childAge=cAge;
-        childClass=cClass;
-        childIndex=cIndex;
+        this.childName=cName;
+        this.childAge=cAge;
+        this.childClass=cClass;
+        this.childIndex=cIndex;
     }
 
     public String getChildName(){

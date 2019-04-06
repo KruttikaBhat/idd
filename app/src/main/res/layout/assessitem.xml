@@ -6,35 +6,29 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+    android:background="@color/colorWhite"
         android:layout_margin="4dp">
-        <TextView
-            android:id="@+id/textViewChildIndex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:background="@color/colorWhite"/>
 
         <TextView
             android:id="@+id/textViewDateLabel"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:textStyle="bold"
-            android:textSize="24sp"
             android:text="Date :"/>
         <TextView
             android:id="@+id/textViewResultLabel"
             android:layout_below="@+id/textViewDateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:text="Result :"/>
         <TextView
@@ -42,35 +36,42 @@
             android:id="@+id/textViewDescriptionLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:text="Description :"/>
         <TextView
             android:id="@+id/textViewDate"
             android:layout_toRightOf="@+id/textViewDateLabel"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:textSize="20sp"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="3.8dp"
             android:text="somedate"/>
         <TextView
             android:id="@+id/textViewResult"
             android:layout_toRightOf="@+id/textViewResultLabel"
             android:layout_below="@+id/textViewDate"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:layout_marginLeft="16dp"
-            android:textSize="20sp"
             android:text="someresult"/>
         <TextView
             android:id="@+id/textViewDescription"
             android:layout_toRightOf="@+id/textViewDescriptionLabel"
             android:layout_below="@+id/textViewResult"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
             android:layout_marginLeft="16dp"
-            android:textSize="20sp"
             android:text="someclass"/>
 
     </RelativeLayout>

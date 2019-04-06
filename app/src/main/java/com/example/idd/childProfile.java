@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,9 +39,8 @@ public class childProfile extends AppCompatActivity {
 
     private static final String TAG = "Firelog";
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private assessAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-
     private TextView name, age, cclass, assessmentsDone;
 
 
@@ -51,13 +52,9 @@ public class childProfile extends AppCompatActivity {
     private static final String root = "users";
     private static final String childcollection = "children";
     private static final String key_assess = "assessments";
-    private static final String key_numassess = "numberOfAssessments";
     private static final String key_name = "Name";
     private static final String key_age = "Age";
     private static final String key_class = "Class";
-    private static final String key_date = "date";
-    private static final String key_des = "description";
-    private static final String key_result = "result";
 
 
     @Override
@@ -67,12 +64,14 @@ public class childProfile extends AppCompatActivity {
 
         final ArrayList<assessData> List= new ArrayList<>();
 
-        List.add(new assessData("name1","age1","class1"));
-        List.add(new assessData("name2","age2","class2"));
-        List.add(new assessData("name3","age3","class3"));
+        //List.add(new assessData("name1","age1","class1"));
+        //List.add(new assessData("name2","age2","class2"));
+        //List.add(new assessData("name3","age3","class3"));
         recyclerView=findViewById(R.id.childProfileRecyclerView);
         layoutManager=new LinearLayoutManager(this);
         adapter=new assessAdapter(List);
+
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -132,11 +131,19 @@ public class childProfile extends AppCompatActivity {
                                                     if (e != null) {
                                                         Log.d(TAG, "Error: " + e.getMessage());
                                                     }
-                                                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                                                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                                        if(doc.getType()==DocumentChange.Type.ADDED){
+                                                            assessData data=doc.getDocument().toObject(assessData.class);
+                                                            List.add(data);
+                                                            adapter.notifyDataSetChanged();
+                                                        }
+                                                        /*
+
                                                         String date = doc.getString(key_date);
                                                         String result = doc.getString(key_result);
                                                         String des = doc.getString(key_des);
                                                         Log.d(TAG, "Date:" + date + " Result:" + result + " Description:" + des);
+                                                        */
                                                     }
 
                                                 }
