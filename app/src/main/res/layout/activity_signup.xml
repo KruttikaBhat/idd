@@ -97,7 +97,6 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="15dp"
-        android:textColor="@color/colorWhite"
         android:textColorHint="@color/background_color"
         android:drawableLeft="@drawable/ic_emailw_black_24dp"
         android:drawableStart="@drawable/ic_emailw_black_24dp"
@@ -128,7 +127,7 @@
         android:inputType="textPassword"
         />
     <CheckBox
-        android:id="@+id/showPasswordCheckbox"
+        android:id="@+id/showPasswordCheckboxSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
